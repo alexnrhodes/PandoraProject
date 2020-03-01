@@ -13,6 +13,15 @@
 		2D135FDA2409D56200D3127A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2D135FD82409D56200D3127A /* Main.storyboard */; };
 		2D135FDC2409D58100D3127A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2D135FDB2409D58100D3127A /* Assets.xcassets */; };
 		2D135FDF2409D58100D3127A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2D135FDD2409D58100D3127A /* LaunchScreen.storyboard */; };
+		387D0077240B496300D394EF /* Ubuntu-B.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 387D0070240B495E00D394EF /* Ubuntu-B.ttf */; };
+		387D0078240B496600D394EF /* Ubuntu-BI.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 387D0071240B495E00D394EF /* Ubuntu-BI.ttf */; };
+		387D0079240B496800D394EF /* Ubuntu-C.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 387D006E240B495E00D394EF /* Ubuntu-C.ttf */; };
+		387D007A240B496B00D394EF /* Ubuntu-L.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 387D0073240B495F00D394EF /* Ubuntu-L.ttf */; };
+		387D007B240B496D00D394EF /* Ubuntu-LI.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 387D006F240B495E00D394EF /* Ubuntu-LI.ttf */; };
+		387D007C240B497000D394EF /* Ubuntu-M.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 387D0074240B495F00D394EF /* Ubuntu-M.ttf */; };
+		387D007D240B497300D394EF /* Ubuntu-MI.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 387D0072240B495E00D394EF /* Ubuntu-MI.ttf */; };
+		387D007E240B497500D394EF /* Ubuntu-R.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 387D0075240B495F00D394EF /* Ubuntu-R.ttf */; };
+		387D007F240B497800D394EF /* Ubuntu-RI.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 387D0076240B495F00D394EF /* Ubuntu-RI.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +33,15 @@
 		2D135FDB2409D58100D3127A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2D135FDE2409D58100D3127A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2D135FE02409D58100D3127A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		387D006E240B495E00D394EF /* Ubuntu-C.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Ubuntu-C.ttf"; sourceTree = "<group>"; };
+		387D006F240B495E00D394EF /* Ubuntu-LI.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Ubuntu-LI.ttf"; sourceTree = "<group>"; };
+		387D0070240B495E00D394EF /* Ubuntu-B.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Ubuntu-B.ttf"; sourceTree = "<group>"; };
+		387D0071240B495E00D394EF /* Ubuntu-BI.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Ubuntu-BI.ttf"; sourceTree = "<group>"; };
+		387D0072240B495E00D394EF /* Ubuntu-MI.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Ubuntu-MI.ttf"; sourceTree = "<group>"; };
+		387D0073240B495F00D394EF /* Ubuntu-L.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Ubuntu-L.ttf"; sourceTree = "<group>"; };
+		387D0074240B495F00D394EF /* Ubuntu-M.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Ubuntu-M.ttf"; sourceTree = "<group>"; };
+		387D0075240B495F00D394EF /* Ubuntu-R.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Ubuntu-R.ttf"; sourceTree = "<group>"; };
+		387D0076240B495F00D394EF /* Ubuntu-RI.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Ubuntu-RI.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,15 +74,56 @@
 		2D135FD12409D56200D3127A /* PandoraWeatherProject */ = {
 			isa = PBXGroup;
 			children = (
-				2D135FD22409D56200D3127A /* AppDelegate.swift */,
-				2D135FD42409D56200D3127A /* SceneDelegate.swift */,
-				2D135FD62409D56200D3127A /* ViewController.swift */,
-				2D135FD82409D56200D3127A /* Main.storyboard */,
-				2D135FDB2409D58100D3127A /* Assets.xcassets */,
-				2D135FDD2409D58100D3127A /* LaunchScreen.storyboard */,
-				2D135FE02409D58100D3127A /* Info.plist */,
+				387D0063240B43AF00D394EF /* View Controllers */,
+				387D0064240B43BD00D394EF /* Storyboards */,
+				387D0062240B438500D394EF /* Resources */,
 			);
 			path = PandoraWeatherProject;
+			sourceTree = "<group>";
+		};
+		387D0062240B438500D394EF /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				2D135FD22409D56200D3127A /* AppDelegate.swift */,
+				2D135FE02409D58100D3127A /* Info.plist */,
+				2D135FD42409D56200D3127A /* SceneDelegate.swift */,
+				2D135FDB2409D58100D3127A /* Assets.xcassets */,
+				387D0067240B461E00D394EF /* Fonts */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		387D0063240B43AF00D394EF /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				2D135FD62409D56200D3127A /* ViewController.swift */,
+			);
+			path = "View Controllers";
+			sourceTree = "<group>";
+		};
+		387D0064240B43BD00D394EF /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				2D135FD82409D56200D3127A /* Main.storyboard */,
+				2D135FDD2409D58100D3127A /* LaunchScreen.storyboard */,
+			);
+			path = Storyboards;
+			sourceTree = "<group>";
+		};
+		387D0067240B461E00D394EF /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				387D0070240B495E00D394EF /* Ubuntu-B.ttf */,
+				387D0071240B495E00D394EF /* Ubuntu-BI.ttf */,
+				387D006E240B495E00D394EF /* Ubuntu-C.ttf */,
+				387D0073240B495F00D394EF /* Ubuntu-L.ttf */,
+				387D006F240B495E00D394EF /* Ubuntu-LI.ttf */,
+				387D0074240B495F00D394EF /* Ubuntu-M.ttf */,
+				387D0072240B495E00D394EF /* Ubuntu-MI.ttf */,
+				387D0075240B495F00D394EF /* Ubuntu-R.ttf */,
+				387D0076240B495F00D394EF /* Ubuntu-RI.ttf */,
+			);
+			path = Fonts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -125,8 +184,17 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				387D007F240B497800D394EF /* Ubuntu-RI.ttf in Resources */,
 				2D135FDF2409D58100D3127A /* LaunchScreen.storyboard in Resources */,
+				387D007D240B497300D394EF /* Ubuntu-MI.ttf in Resources */,
+				387D0078240B496600D394EF /* Ubuntu-BI.ttf in Resources */,
 				2D135FDC2409D58100D3127A /* Assets.xcassets in Resources */,
+				387D0079240B496800D394EF /* Ubuntu-C.ttf in Resources */,
+				387D0077240B496300D394EF /* Ubuntu-B.ttf in Resources */,
+				387D007A240B496B00D394EF /* Ubuntu-L.ttf in Resources */,
+				387D007E240B497500D394EF /* Ubuntu-R.ttf in Resources */,
+				387D007C240B497000D394EF /* Ubuntu-M.ttf in Resources */,
+				387D007B240B496D00D394EF /* Ubuntu-LI.ttf in Resources */,
 				2D135FDA2409D56200D3127A /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -286,7 +354,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = RCQFNX9QQ7;
-				INFOPLIST_FILE = PandoraWeatherProject/Info.plist;
+				INFOPLIST_FILE = PandoraWeatherProject/Resources/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -304,7 +373,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = RCQFNX9QQ7;
-				INFOPLIST_FILE = PandoraWeatherProject/Info.plist;
+				INFOPLIST_FILE = PandoraWeatherProject/Resources/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
