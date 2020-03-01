@@ -15,11 +15,11 @@
         </array>
     </customFonts>
     <scenes>
-        <!--View Controller-->
+        <!--Current Weather View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="PandoraWeatherProject" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                <viewController id="BYZ-38-t0r" customClass="CurrentWeatherViewController" customModule="PandoraWeatherProject" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC" userLabel="MainView">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -29,11 +29,13 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SE7-kF-gha" userLabel="CurrentTempView">
                                         <rect key="frame" x="125" y="130" width="164" height="164"/>
                                         <subviews>
-                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Lij-F1-piN">
-                                                <rect key="frame" x="0.0" y="0.0" width="164" height="164"/>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.5" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="circle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="Lij-F1-piN">
+                                                <rect key="frame" x="0.0" y="0.5" width="164" height="163"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             </imageView>
-                                            <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" axis="vertical" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="8Uv-Tl-ONR">
-                                                <rect key="frame" x="37" y="32" width="90" height="93.5"/>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="8Uv-Tl-ONR">
+                                                <rect key="frame" x="37" y="35.5" width="90" height="93.5"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="70°" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="pwZ-YC-XWq">
                                                         <rect key="frame" x="0.0" y="0.0" width="90" height="67.5"/>
@@ -50,9 +52,11 @@
                                                 </subviews>
                                             </stackView>
                                         </subviews>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="SE7-kF-gha" secondAttribute="height" multiplier="1:1" id="GKX-6h-rlo"/>
+                                            <constraint firstItem="8Uv-Tl-ONR" firstAttribute="centerY" secondItem="SE7-kF-gha" secondAttribute="centerY" id="hYC-RC-PTQ"/>
+                                            <constraint firstItem="8Uv-Tl-ONR" firstAttribute="centerX" secondItem="SE7-kF-gha" secondAttribute="centerX" id="kdO-fF-q0e"/>
                                             <constraint firstItem="Lij-F1-piN" firstAttribute="leading" secondItem="SE7-kF-gha" secondAttribute="leading" id="nOP-EL-Dne"/>
                                             <constraint firstAttribute="bottom" secondItem="Lij-F1-piN" secondAttribute="bottom" id="sdv-Nv-B57"/>
                                             <constraint firstAttribute="trailing" secondItem="Lij-F1-piN" secondAttribute="trailing" id="suh-HV-asQ"/>
@@ -153,7 +157,7 @@
                                             <segment title="Favorite Location"/>
                                         </segments>
                                     </segmentedControl>
-                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="14" translatesAutoresizingMaskIntoConstraints="NO" id="ZAA-Sp-P4f">
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="14" translatesAutoresizingMaskIntoConstraints="NO" id="ZAA-Sp-P4f" userLabel="CurrentLocationStackView">
                                         <rect key="frame" x="20" y="98" width="372.5" height="20"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sallisaw, Oklahoma" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zJB-h7-Uw4">
@@ -181,10 +185,12 @@
                                                 <state key="normal" title="Change Location">
                                                     <color key="titleColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
+                                                <connections>
+                                                    <segue destination="jf5-T4-WBH" kind="presentation" modalPresentationStyle="fullScreen" id="uzz-8E-7C1"/>
+                                                </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qnD-rS-Ues">
                                                 <rect key="frame" x="350.5" y="0.0" width="22" height="20"/>
-                                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <state key="normal" image="star" catalog="system"/>
                                             </button>
                                         </subviews>
@@ -224,7 +230,7 @@
                                         <rect key="frame" x="30" y="69.5" width="354" height="316.5"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <prototypes>
-                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="vaB-48-Qa8">
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="vaB-48-Qa8" customClass="ForecastedWeatherTableViewCell" customModule="PandoraWeatherProject" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="28" width="354" height="43.5"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="vaB-48-Qa8" id="qg5-Ru-Rlh">
@@ -236,16 +242,16 @@
                                                             <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                         </view>
                                                         <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="vEf-As-9Wh" userLabel="DayTempStackView">
-                                                            <rect key="frame" x="373" y="12" width="292" height="19.5"/>
+                                                            <rect key="frame" x="20" y="12" width="305" height="19.5"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Monday" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L9v-uK-PFn">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="146" height="19.5"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="152.5" height="19.5"/>
                                                                     <fontDescription key="fontDescription" name="Ubuntu-Bold" family="Ubuntu" pointSize="17"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="70°" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9N2-z7-Y5H">
-                                                                    <rect key="frame" x="146" y="0.0" width="146" height="19.5"/>
+                                                                    <rect key="frame" x="152.5" y="0.0" width="152.5" height="19.5"/>
                                                                     <fontDescription key="fontDescription" name="Ubuntu-Bold" family="Ubuntu" pointSize="17"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
@@ -255,16 +261,23 @@
                                                     </subviews>
                                                     <constraints>
                                                         <constraint firstItem="P8o-hN-jmD" firstAttribute="leading" secondItem="qg5-Ru-Rlh" secondAttribute="leading" id="4rV-OQ-8RY"/>
-                                                        <constraint firstItem="vEf-As-9Wh" firstAttribute="centerY" secondItem="qg5-Ru-Rlh" secondAttribute="centerY" id="6DJ-6m-VGF"/>
+                                                        <constraint firstItem="vEf-As-9Wh" firstAttribute="centerY" secondItem="P8o-hN-jmD" secondAttribute="centerY" id="6DJ-6m-VGF"/>
                                                         <constraint firstItem="P8o-hN-jmD" firstAttribute="top" secondItem="qg5-Ru-Rlh" secondAttribute="top" id="AGr-77-0Ne"/>
                                                         <constraint firstAttribute="bottom" secondItem="P8o-hN-jmD" secondAttribute="bottom" id="Inj-H3-MyM"/>
                                                         <constraint firstAttribute="trailing" secondItem="P8o-hN-jmD" secondAttribute="trailing" constant="1" id="J5A-uB-BGg"/>
-                                                        <constraint firstItem="vEf-As-9Wh" firstAttribute="leading" secondItem="P8o-hN-jmD" secondAttribute="trailing" constant="20" id="obT-Re-CkT"/>
-                                                        <constraint firstItem="P8o-hN-jmD" firstAttribute="trailingMargin" secondItem="vEf-As-9Wh" secondAttribute="trailing" constant="-320" id="t9P-ti-jLv"/>
+                                                        <constraint firstItem="P8o-hN-jmD" firstAttribute="trailingMargin" secondItem="vEf-As-9Wh" secondAttribute="trailing" constant="20" id="t9P-ti-jLv"/>
+                                                        <constraint firstItem="vEf-As-9Wh" firstAttribute="leading" secondItem="qg5-Ru-Rlh" secondAttribute="leading" constant="20" id="wGm-bh-yrb"/>
                                                     </constraints>
                                                 </tableViewCellContentView>
+                                                <connections>
+                                                    <segue destination="vU3-4C-WqK" kind="presentation" modalPresentationStyle="fullScreen" id="f2y-H9-Ysr"/>
+                                                </connections>
                                             </tableViewCell>
                                         </prototypes>
+                                        <connections>
+                                            <outlet property="dataSource" destination="BYZ-38-t0r" id="oax-3m-Qd5"/>
+                                            <outlet property="delegate" destination="BYZ-38-t0r" id="nsd-eE-QzN"/>
+                                        </connections>
                                     </tableView>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemGrayColor" red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -296,10 +309,10 @@
             </objects>
             <point key="canvasLocation" x="-64" y="175"/>
         </scene>
-        <!--View Controller-->
+        <!--Search View Controller-->
         <scene sceneID="kDT-pi-zRm">
             <objects>
-                <viewController id="jf5-T4-WBH" sceneMemberID="viewController">
+                <viewController id="jf5-T4-WBH" customClass="SearchViewController" customModule="PandoraWeatherProject" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="wgi-gE-FU1">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -317,15 +330,16 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="ZN3-xd-59n"/>
                     </view>
+                    <navigationItem key="navigationItem" id="P9T-bO-8Gr"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IzE-DD-Oc8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="738" y="14"/>
         </scene>
-        <!--View Controller-->
+        <!--Forecasted Weather Day View Controller-->
         <scene sceneID="ykq-kP-MPV">
             <objects>
-                <viewController id="vU3-4C-WqK" customClass="ViewController" customModule="PandoraWeatherProject" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="vU3-4C-WqK" customClass="ForecastedWeatherDayViewController" customModule="PandoraWeatherProject" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="mhZ-L8-P10" userLabel="MainView">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -336,9 +350,10 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MpX-eq-ShC" userLabel="PredictedTempView">
                                         <rect key="frame" x="50" y="160" width="314" height="314"/>
                                         <subviews>
-                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3NP-0j-v1k">
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.5" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="circle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="3NP-0j-v1k">
                                                 <rect key="frame" x="0.0" y="0.0" width="314" height="314"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             </imageView>
                                             <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" axis="vertical" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="y4o-US-7XL">
                                                 <rect key="frame" x="97" y="97" width="120" height="120.5"/>
@@ -358,7 +373,7 @@
                                                 </subviews>
                                             </stackView>
                                         </subviews>
-                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="MpX-eq-ShC" secondAttribute="height" multiplier="1:1" id="GGS-EJ-uGw"/>
                                         </constraints>
@@ -482,10 +497,11 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VlW-yl-rta" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="739" y="710"/>
+            <point key="canvasLocation" x="738" y="669"/>
         </scene>
     </scenes>
     <resources>
+        <image name="circle.fill" catalog="system" width="64" height="60"/>
         <image name="star" catalog="system" width="64" height="58"/>
     </resources>
 </document>
