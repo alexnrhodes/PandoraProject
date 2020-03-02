@@ -1,5 +1,5 @@
 //
-//  CurrentWeatherViewController.swift
+//  SearchViewController.swift
 //  PandoraWeatherProject
 //
 //  Created by Alex Rhodes on 3/1/20.
@@ -8,8 +8,9 @@
 
 import UIKit
 
-class CurrentWeatherViewController: UIViewController {
+class SearchViewController: UIViewController {
 
+    @IBOutlet weak var loactionSearchBar: UISearchBar!
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -27,19 +28,4 @@ class CurrentWeatherViewController: UIViewController {
     }
     */
 
-}
-
-// MARK: Table View DataSource Methods
-
-extension CurrentWeatherViewController: UITableViewDataSource {
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return UITableViewCell()
-    }
-    
-    
 }

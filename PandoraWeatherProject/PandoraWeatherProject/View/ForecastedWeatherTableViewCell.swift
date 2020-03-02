@@ -10,9 +10,16 @@ import UIKit
 
 class ForecastedWeatherTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var floatingView: UIView!
+    @IBOutlet weak var dayLabel: UILabel!
+    @IBOutlet weak var tempLabel: UILabel!
+    
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        floatingView.layer.cornerRadius = 20
+        floatingView.layer.masksToBounds = true
+        self.backgroundColor = .clear
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
