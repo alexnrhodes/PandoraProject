@@ -7,9 +7,10 @@
 //
 
 import UIKit
+import CoreLocation
 
 class CurrentWeatherViewController: UIViewController {
-
+    
     @IBOutlet weak var weatherSegmentedControl: UISegmentedControl!
     @IBOutlet weak var highLabel: UILabel!
     @IBOutlet weak var lowLabel: UILabel!
@@ -24,23 +25,27 @@ class CurrentWeatherViewController: UIViewController {
     @IBOutlet weak var weatherTypeLabel: UILabel!
     @IBOutlet weak var forecastedWeatherTableView: UITableView!
     
+    var network = Network()
+    var locationManager = CLLocationManager()
+    var currentLocation: CLLocation!
+    var currentWeather: CurrentWeatherViewModel?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
     }
     
-
+    
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destination.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
 }
 
 // MARK: TableView Data Source Methods
@@ -56,4 +61,29 @@ extension CurrentWeatherViewController: UITableViewDataSource {
     }
     
     
+}
+
+// MARK: Methods
+
+// Networking
+extension CurrentWeatherViewController {
+    
+    func getWeatherByCurrentLocation() {
+        
+        network.fetchWeatherByLocation(location: currentLocation) { (currentWeather, error) in
+            self.currentWeather = 
+        }
+        
+    }
+    
+    // CoreLocation
+    
+    
+    
+    func checkAuthorization() {
+        if CLLocationManager.authorizationStatus() == .authorizedAlways ||
+            CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
+            self.currentLocation = locationManager.location
+        }
+    }
 }
