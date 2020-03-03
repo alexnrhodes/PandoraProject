@@ -277,7 +277,11 @@
                     <navigationItem key="navigationItem" id="4wM-6b-Pf4">
                         <rightBarButtonItems>
                             <barButtonItem image="star" catalog="system" id="bqv-D6-ZXq"/>
-                            <barButtonItem title="Change Location" id="Msb-Q0-Kkg"/>
+                            <barButtonItem title="Change Location" id="Msb-Q0-Kkg">
+                                <connections>
+                                    <segue destination="jf5-T4-WBH" kind="presentation" modalPresentationStyle="overFullScreen" id="Z4u-mu-RIj"/>
+                                </connections>
+                            </barButtonItem>
                         </rightBarButtonItems>
                     </navigationItem>
                     <connections>
@@ -304,7 +308,7 @@
         <scene sceneID="kDT-pi-zRm">
             <objects>
                 <viewController id="jf5-T4-WBH" customClass="SearchViewController" customModule="PandoraWeatherProject" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="wgi-gE-FU1">
+                    <view key="view" alpha="0.59999999999999998" contentMode="scaleToFill" id="wgi-gE-FU1" userLabel="MainView">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -313,7 +317,7 @@
                                 <textInputTraits key="textInputTraits"/>
                             </searchBar>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="0X7-B6-Hgh" firstAttribute="top" secondItem="ZN3-xd-59n" secondAttribute="top" constant="71" id="2eC-Pf-7b8"/>
                             <constraint firstItem="0X7-B6-Hgh" firstAttribute="trailing" secondItem="ZN3-xd-59n" secondAttribute="trailing" constant="-50" id="Sf1-vM-DrB"/>
@@ -510,7 +514,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PKa-Qn-LFc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-65.217391304347828" y="174.77678571428569"/>
+            <point key="canvasLocation" x="52" y="175"/>
         </scene>
     </scenes>
     <resources>
