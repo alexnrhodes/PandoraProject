@@ -9,7 +9,7 @@
 import Foundation
 import CoreLocation
 
-class WeatherController {
+class Network {
     
     // MARK: - Properties
     
