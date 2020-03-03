@@ -17,5 +17,13 @@ struct ForecastedWeatherDayViewModel {
     let cloudPercentage: Int
     let date: Double
     
-    
+    init(forecastedWeatherDay: ForcastedWeatherDay) {
+        self.weather = forecastedWeatherDay.weather.first ?? "N/A"
+        self.temp = forecastedWeatherDay.temp
+        self.feelsLike = forecastedWeatherDay.feelsLike
+        self.tempMin = forecastedWeatherDay.tempMin
+        self.tempMax = forecastedWeatherDay.tempMax
+        self.cloudPercentage = forecastedWeatherDay.cloudPercentage
+        self.date = forecastedWeatherDay.date
+    }
 }
