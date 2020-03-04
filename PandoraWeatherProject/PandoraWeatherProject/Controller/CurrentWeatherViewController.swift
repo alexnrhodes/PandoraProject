@@ -11,6 +11,8 @@ import CoreLocation
 
 class CurrentWeatherViewController: UIViewController {
     
+    // MARK: IBOutlets
+    
     @IBOutlet weak var weatherSegmentedControl: UISegmentedControl!
     @IBOutlet weak var highLabel: UILabel!
     @IBOutlet weak var lowLabel: UILabel!
@@ -25,15 +27,25 @@ class CurrentWeatherViewController: UIViewController {
     @IBOutlet weak var weatherTypeLabel: UILabel!
     @IBOutlet weak var forecastedWeatherTableView: UITableView!
     
+    // MARK: Properties
+    
+    
     var network = Network()
     var locationManager = CLLocationManager()
     
     var currentLocation: CLLocation! {
         didSet {
-             getWeatherByCurrentLocation()
+            getWeatherByCurrentLocation()
+            getForecastedWeather()
         }
     }
     var currentWeather: CurrentWeatherViewModel? {
+        didSet {
+            updateViews()
+        }
+    }
+    
+    var fiveDayForecast: [ForecastedWeatherDayViewModel]! {
         didSet {
             updateViews()
         }
@@ -61,12 +73,32 @@ class CurrentWeatherViewController: UIViewController {
 
 extension CurrentWeatherViewController: UITableViewDataSource {
     
+    func numberOfSections(in tableView: UITableView) -> Int {
+        guard let fiveDayForecast = fiveDayForecast else { return 0 }
+        return fiveDayForecast.count
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return UITableViewCell()
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "ForecastedWeatherDayCell", for: indexPath) as? ForecastedWeatherTableViewCell else {return UITableViewCell()}
+        
+        let forecastedDay = fiveDayForecast[indexPath.row]
+        
+        DispatchQueue.main.async {
+            cell.dayLabel.text = "\(forecastedDay.date)"
+            cell.tempLabel.text = "\(forecastedDay.temp)"
+            cell.floatingView.layer.cornerRadius = 30
+            cell.floatingView.layer.masksToBounds = true
+            cell.floatingView.translatesAutoresizingMaskIntoConstraints = false
+            cell.floatingView.backgroundColor = UIColor(white: 1, alpha: 0.5)
+            
+        }
+        
+        
+        return cell
     }
     
     
@@ -74,34 +106,63 @@ extension CurrentWeatherViewController: UITableViewDataSource {
 
 // MARK: Methods
 
-// Networking
+
 extension CurrentWeatherViewController {
     
+    // Networking
     func getWeatherByCurrentLocation() {
-        
+        // fetch the current weather by location upon app launch
         network.fetchWeatherByLocation(location: currentLocation) { (currentWeather, error) in
+            
+            if let error = error {
+                NSLog("Error retrieving weather by current location: \(error)")
+            }
+            
             if let currentWeather = currentWeather {
                 print(currentWeather)
                 self.currentWeather = CurrentWeatherViewModel(currentWeather: currentWeather)
-            } else {
-                NSLog("Error retrieving weather by current location: \(String(describing: error))")
             }
         }
     }
     
+    func getForecastedWeather() {
+        network.fetchFiveDayByLocation(location: currentLocation) { (forecastedWeatherDays, error) in
+            
+            if let error = error {
+                NSLog("Error retrieving five day forecast by current location: \(error)")
+            }
+            
+            if let forecastedWeatherDays = forecastedWeatherDays {
+                let day = forecastedWeatherDays.map {ForecastedWeatherDayViewModel(forecastedWeatherDay: $0)}
+                self.fiveDayForecast = day
+                
+            }
+        }
+    }
+    
+    // UI
     func updateViews() {
-        guard let currentWeather = currentWeather else { return }
         
-        DispatchQueue.main.async {
-            self.weatherSegmentedControl.setTitle("\(currentWeather.cityName)", forSegmentAt: 0)
-            self.currentTempLabel.text = "\(currentWeather.temp)°"
-            self.highLabel.text = "\(currentWeather.tempMax)°"
-            self.lowLabel.text = "\(currentWeather.tempMin)°"
-            self.windSpeedLabel.text = "\(currentWeather.windSpeed) MPH"
-            self.cloudPercentageLabel.text = "\(currentWeather.cloudPercentage) %"
-            self.sunriseLabel.text = "\(currentWeather.sunrise) AM"
-            self.sunsetLabel.text = "\(currentWeather.sunset) PM"
-
+        if let currentWeather = currentWeather  {
+            DispatchQueue.main.async {
+                // update UI elements on current weather
+                self.weatherSegmentedControl.setTitle("\(currentWeather.cityName)", forSegmentAt: 0)
+                self.currentTempLabel.text = "\(currentWeather.temp)°"
+                self.highLabel.text = "\(currentWeather.tempMax)°"
+                self.lowLabel.text = "\(currentWeather.tempMin)°"
+                self.windSpeedLabel.text = "\(currentWeather.windSpeed) MPH"
+                self.cloudPercentageLabel.text = "\(currentWeather.cloudPercentage) %"
+                self.sunriseLabel.text = "\(currentWeather.sunrise) AM"
+                self.sunsetLabel.text = "\(currentWeather.sunset) PM"
+            }
+        }
+        
+        if let fiveDayForecast = fiveDayForecast {
+            DispatchQueue.main.async {
+                print(fiveDayForecast)
+                self.forecastedWeatherTableView.reloadData()
+                self.forecastedWeatherTableView.backgroundColor = .clear
+            }
         }
     }
 }
@@ -136,7 +197,7 @@ extension CurrentWeatherViewController: CLLocationManagerDelegate {
     }
     
     func checkForCurrentLocation() {
-         // Get current location
+        // Get current location
         if CLLocationManager.authorizationStatus() == .authorizedAlways ||
             CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
             self.currentLocation = locationManager.location

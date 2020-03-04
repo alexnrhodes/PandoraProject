@@ -25,7 +25,7 @@ struct ForcastedWeatherDay: Codable {
     enum CodingKeys: String, CodingKey {
         case weather
         case temp = "main"
-        case feelsLike = "feels_like"
+        case feelsLike
         case tempMin
         case tempMax
         case cloudPercentage = "clouds"
@@ -37,6 +37,7 @@ struct ForcastedWeatherDay: Codable {
 
         enum TempKeys: String, CodingKey {
             case temp
+            case feelsLike = "feels_like"
             case tempMin = "temp_min"
             case tempMax = "temp_max"
         }
@@ -67,7 +68,7 @@ struct ForcastedWeatherDay: Codable {
         // Temps
         let mainContainter = try container.nestedContainer(keyedBy: CodingKeys.TempKeys.self, forKey: .temp)
         let temp = try mainContainter.decode(Double.self, forKey: .temp)
-        let feelsLike = try container.decode(Double.self, forKey: .feelsLike)
+        let feelsLike = try mainContainter.decode(Double.self, forKey: .feelsLike)
         let tempMin = try mainContainter.decode(Double.self, forKey: .tempMin)
         let tempMax = try mainContainter.decode(Double.self, forKey: .tempMax)
         self.temp = temp
