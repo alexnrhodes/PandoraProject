@@ -28,7 +28,7 @@ class CurrentWeatherViewController: UIViewController {
     @IBOutlet weak var forecastedWeatherTableView: UITableView!
     
     // MARK: Properties
-
+    
     
     var network = Network()
     var locationManager = CLLocationManager()
@@ -73,12 +73,32 @@ class CurrentWeatherViewController: UIViewController {
 
 extension CurrentWeatherViewController: UITableViewDataSource {
     
+    func numberOfSections(in tableView: UITableView) -> Int {
+        guard let fiveDayForecast = fiveDayForecast else { return 0 }
+        return fiveDayForecast.count
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return 1
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return UITableViewCell()
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "ForecastedWeatherDayCell", for: indexPath) as? ForecastedWeatherTableViewCell else {return UITableViewCell()}
+        
+        let forecastedDay = fiveDayForecast[indexPath.row]
+        
+        DispatchQueue.main.async {
+            cell.dayLabel.text = "\(forecastedDay.date)"
+            cell.tempLabel.text = "\(forecastedDay.temp)"
+            cell.floatingView.layer.cornerRadius = 30
+            cell.floatingView.layer.masksToBounds = true
+            cell.floatingView.translatesAutoresizingMaskIntoConstraints = false
+            cell.floatingView.backgroundColor = UIColor(white: 1, alpha: 0.5)
+            
+        }
+        
+        
+        return cell
     }
     
     
@@ -96,7 +116,6 @@ extension CurrentWeatherViewController {
             
             if let error = error {
                 NSLog("Error retrieving weather by current location: \(error)")
-                #warning("add a user notification")
             }
             
             if let currentWeather = currentWeather {
@@ -111,11 +130,12 @@ extension CurrentWeatherViewController {
             
             if let error = error {
                 NSLog("Error retrieving five day forecast by current location: \(error)")
-                #warning("add a user notification")
             }
             
             if let forecastedWeatherDays = forecastedWeatherDays {
-                self.fiveDayForecast = forecastedWeatherDays.map({ForecastedWeatherDayViewModel(forecastedWeatherDay: $0)})
+                let day = forecastedWeatherDays.map {ForecastedWeatherDayViewModel(forecastedWeatherDay: $0)}
+                self.fiveDayForecast = day
+                
             }
         }
     }
@@ -123,19 +143,26 @@ extension CurrentWeatherViewController {
     // UI
     func updateViews() {
         
-        guard let currentWeather = currentWeather else { return }
+        if let currentWeather = currentWeather  {
+            DispatchQueue.main.async {
+                // update UI elements on current weather
+                self.weatherSegmentedControl.setTitle("\(currentWeather.cityName)", forSegmentAt: 0)
+                self.currentTempLabel.text = "\(currentWeather.temp)°"
+                self.highLabel.text = "\(currentWeather.tempMax)°"
+                self.lowLabel.text = "\(currentWeather.tempMin)°"
+                self.windSpeedLabel.text = "\(currentWeather.windSpeed) MPH"
+                self.cloudPercentageLabel.text = "\(currentWeather.cloudPercentage) %"
+                self.sunriseLabel.text = "\(currentWeather.sunrise) AM"
+                self.sunsetLabel.text = "\(currentWeather.sunset) PM"
+            }
+        }
         
-        DispatchQueue.main.async {
-            // update UI elements on current weather
-            self.weatherSegmentedControl.setTitle("\(currentWeather.cityName)", forSegmentAt: 0)
-            self.currentTempLabel.text = "\(currentWeather.temp)°"
-            self.highLabel.text = "\(currentWeather.tempMax)°"
-            self.lowLabel.text = "\(currentWeather.tempMin)°"
-            self.windSpeedLabel.text = "\(currentWeather.windSpeed) MPH"
-            self.cloudPercentageLabel.text = "\(currentWeather.cloudPercentage) %"
-            self.sunriseLabel.text = "\(currentWeather.sunrise) AM"
-            self.sunsetLabel.text = "\(currentWeather.sunset) PM"
-            
+        if let fiveDayForecast = fiveDayForecast {
+            DispatchQueue.main.async {
+                print(fiveDayForecast)
+                self.forecastedWeatherTableView.reloadData()
+                self.forecastedWeatherTableView.backgroundColor = .clear
+            }
         }
     }
 }
