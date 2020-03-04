@@ -12,6 +12,12 @@
 		2D135FDA2409D56200D3127A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2D135FD82409D56200D3127A /* Main.storyboard */; };
 		2D135FDC2409D58100D3127A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2D135FDB2409D58100D3127A /* Assets.xcassets */; };
 		2D135FDF2409D58100D3127A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2D135FDD2409D58100D3127A /* LaunchScreen.storyboard */; };
+		38709B41240CA72F00EEA5C1 /* CurrentWeather.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38709B40240CA72F00EEA5C1 /* CurrentWeather.swift */; };
+		38709B43240CA77E00EEA5C1 /* CurrentWeatherViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38709B42240CA77E00EEA5C1 /* CurrentWeatherViewModel.swift */; };
+		38709B45240CA8D600EEA5C1 /* ForecastedWeatherDay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38709B44240CA8D600EEA5C1 /* ForecastedWeatherDay.swift */; };
+		38709B47240CA9C400EEA5C1 /* ForecastedWeatherDayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38709B46240CA9C400EEA5C1 /* ForecastedWeatherDayViewModel.swift */; };
+		38709B49240CB66800EEA5C1 /* Network.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38709B48240CB66800EEA5C1 /* Network.swift */; };
+		38709B4C240CB6AA00EEA5C1 /* DispatchGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38709B4B240CB6AA00EEA5C1 /* DispatchGroup.swift */; };
 		387D0077240B496300D394EF /* Ubuntu-B.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 387D0070240B495E00D394EF /* Ubuntu-B.ttf */; };
 		387D0078240B496600D394EF /* Ubuntu-BI.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 387D0071240B495E00D394EF /* Ubuntu-BI.ttf */; };
 		387D0079240B496800D394EF /* Ubuntu-C.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 387D006E240B495E00D394EF /* Ubuntu-C.ttf */; };
@@ -35,6 +41,12 @@
 		2D135FDB2409D58100D3127A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2D135FDE2409D58100D3127A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2D135FE02409D58100D3127A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		38709B40240CA72F00EEA5C1 /* CurrentWeather.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentWeather.swift; sourceTree = "<group>"; };
+		38709B42240CA77E00EEA5C1 /* CurrentWeatherViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentWeatherViewModel.swift; sourceTree = "<group>"; };
+		38709B44240CA8D600EEA5C1 /* ForecastedWeatherDay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForecastedWeatherDay.swift; sourceTree = "<group>"; };
+		38709B46240CA9C400EEA5C1 /* ForecastedWeatherDayViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForecastedWeatherDayViewModel.swift; sourceTree = "<group>"; };
+		38709B48240CB66800EEA5C1 /* Network.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Network.swift; sourceTree = "<group>"; };
+		38709B4B240CB6AA00EEA5C1 /* DispatchGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DispatchGroup.swift; sourceTree = "<group>"; };
 		387D006E240B495E00D394EF /* Ubuntu-C.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Ubuntu-C.ttf"; sourceTree = "<group>"; };
 		387D006F240B495E00D394EF /* Ubuntu-LI.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Ubuntu-LI.ttf"; sourceTree = "<group>"; };
 		387D0070240B495E00D394EF /* Ubuntu-B.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Ubuntu-B.ttf"; sourceTree = "<group>"; };
@@ -80,6 +92,7 @@
 		2D135FD12409D56200D3127A /* PandoraWeatherProject */ = {
 			isa = PBXGroup;
 			children = (
+				38709B4A240CB69B00EEA5C1 /* Helpers */,
 				38709B3E240C375600EEA5C1 /* ViewModel */,
 				38709B3D240C374400EEA5C1 /* Model */,
 				38F0FA3D240C305100426676 /* View */,
@@ -94,6 +107,8 @@
 		38709B3D240C374400EEA5C1 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				38709B40240CA72F00EEA5C1 /* CurrentWeather.swift */,
+				38709B44240CA8D600EEA5C1 /* ForecastedWeatherDay.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -101,6 +116,8 @@
 		38709B3E240C375600EEA5C1 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				38709B42240CA77E00EEA5C1 /* CurrentWeatherViewModel.swift */,
+				38709B46240CA9C400EEA5C1 /* ForecastedWeatherDayViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -108,8 +125,17 @@
 		38709B3F240C377000EEA5C1 /* Networking */ = {
 			isa = PBXGroup;
 			children = (
+				38709B48240CB66800EEA5C1 /* Network.swift */,
 			);
 			path = Networking;
+			sourceTree = "<group>";
+		};
+		38709B4A240CB69B00EEA5C1 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				38709B4B240CB6AA00EEA5C1 /* DispatchGroup.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 		387D0062240B438500D394EF /* Resources */ = {
@@ -249,10 +275,16 @@
 			files = (
 				38F0FA3C240C2E2200426676 /* SearchViewController.swift in Sources */,
 				38F0FA3A240C2E1700426676 /* ForecastedWeatherDayViewController.swift in Sources */,
+				38709B45240CA8D600EEA5C1 /* ForecastedWeatherDay.swift in Sources */,
 				2D135FD32409D56200D3127A /* AppDelegate.swift in Sources */,
+				38709B41240CA72F00EEA5C1 /* CurrentWeather.swift in Sources */,
+				38709B49240CB66800EEA5C1 /* Network.swift in Sources */,
 				2D135FD52409D56200D3127A /* SceneDelegate.swift in Sources */,
 				38F0FA3F240C306F00426676 /* ForecastedWeatherTableViewCell.swift in Sources */,
 				38F0FA38240C2DED00426676 /* CurrentWeatherViewController.swift in Sources */,
+				38709B47240CA9C400EEA5C1 /* ForecastedWeatherDayViewModel.swift in Sources */,
+				38709B43240CA77E00EEA5C1 /* CurrentWeatherViewModel.swift in Sources */,
+				38709B4C240CB6AA00EEA5C1 /* DispatchGroup.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
