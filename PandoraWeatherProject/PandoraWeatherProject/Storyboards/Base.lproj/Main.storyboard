@@ -193,32 +193,32 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="HPU-av-us4">
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="60" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="HPU-av-us4">
                                         <rect key="frame" x="30" y="69.5" width="354" height="316.5"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <prototypes>
-                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="vaB-48-Qa8" customClass="ForecastedWeatherTableViewCell" customModule="PandoraWeatherProject" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="28" width="354" height="43.5"/>
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ForecastedWeatherDayCell" id="vaB-48-Qa8" customClass="ForecastedWeatherTableViewCell" customModule="PandoraWeatherProject" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="28" width="354" height="60"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="vaB-48-Qa8" id="qg5-Ru-Rlh">
-                                                    <rect key="frame" x="0.0" y="0.0" width="354" height="43.5"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="354" height="60"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="P8o-hN-jmD">
-                                                            <rect key="frame" x="0.0" y="2" width="353" height="47.5"/>
+                                                            <rect key="frame" x="0.0" y="2" width="354" height="64"/>
                                                             <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                                         </view>
                                                         <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="vEf-As-9Wh" userLabel="DayTempStackView">
-                                                            <rect key="frame" x="20" y="16" width="305" height="19.5"/>
+                                                            <rect key="frame" x="20" y="24.5" width="306" height="19.5"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Monday" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L9v-uK-PFn">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="152.5" height="19.5"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="153" height="19.5"/>
                                                                     <fontDescription key="fontDescription" name="Ubuntu-Bold" family="Ubuntu" pointSize="17"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="70°" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9N2-z7-Y5H">
-                                                                    <rect key="frame" x="152.5" y="0.0" width="152.5" height="19.5"/>
+                                                                    <rect key="frame" x="153" y="0.0" width="153" height="19.5"/>
                                                                     <fontDescription key="fontDescription" name="Ubuntu-Bold" family="Ubuntu" pointSize="17"/>
                                                                     <nil key="textColor"/>
                                                                     <nil key="highlightedColor"/>
@@ -227,15 +227,16 @@
                                                         </stackView>
                                                     </subviews>
                                                     <constraints>
-                                                        <constraint firstItem="P8o-hN-jmD" firstAttribute="leading" secondItem="qg5-Ru-Rlh" secondAttribute="leading" id="4rV-OQ-8RY"/>
+                                                        <constraint firstAttribute="leading" secondItem="P8o-hN-jmD" secondAttribute="leading" id="4rV-OQ-8RY"/>
                                                         <constraint firstItem="vEf-As-9Wh" firstAttribute="centerY" secondItem="P8o-hN-jmD" secondAttribute="centerY" id="6DJ-6m-VGF"/>
                                                         <constraint firstItem="P8o-hN-jmD" firstAttribute="top" secondItem="qg5-Ru-Rlh" secondAttribute="top" constant="2" id="AGr-77-0Ne"/>
                                                         <constraint firstAttribute="bottom" secondItem="P8o-hN-jmD" secondAttribute="bottomMargin" constant="2" id="Inj-H3-MyM"/>
-                                                        <constraint firstAttribute="trailing" secondItem="P8o-hN-jmD" secondAttribute="trailing" constant="1" id="J5A-uB-BGg"/>
+                                                        <constraint firstItem="P8o-hN-jmD" firstAttribute="trailing" secondItem="qg5-Ru-Rlh" secondAttribute="trailing" id="J5A-uB-BGg"/>
                                                         <constraint firstItem="P8o-hN-jmD" firstAttribute="trailingMargin" secondItem="vEf-As-9Wh" secondAttribute="trailing" constant="20" id="t9P-ti-jLv"/>
                                                         <constraint firstItem="vEf-As-9Wh" firstAttribute="leading" secondItem="qg5-Ru-Rlh" secondAttribute="leading" constant="20" id="wGm-bh-yrb"/>
                                                     </constraints>
                                                 </tableViewCellContentView>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <connections>
                                                     <outlet property="dayLabel" destination="L9v-uK-PFn" id="LWH-iq-rba"/>
                                                     <outlet property="floatingView" destination="P8o-hN-jmD" id="fJH-cY-kdv"/>
