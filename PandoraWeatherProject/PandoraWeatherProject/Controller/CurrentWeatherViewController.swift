@@ -93,6 +93,7 @@ extension CurrentWeatherViewController {
         guard let currentWeather = currentWeather else { return }
         
         DispatchQueue.main.async {
+            self.weatherSegmentedControl.setTitle("\(currentWeather.cityName)", forSegmentAt: 0)
             self.currentTempLabel.text = "\(currentWeather.temp)°"
             self.highLabel.text = "\(currentWeather.tempMax)°"
             self.lowLabel.text = "\(currentWeather.tempMin)°"
