@@ -8,17 +8,24 @@
 
 import UIKit
 
-class SearchViewController: UIViewController {
-
+class SearchViewController: UIViewController, UISearchBarDelegate {
+    
     @IBOutlet weak var loactionSearchBar: UISearchBar!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        navigationController?.isNavigationBarHidden = true
-         let blurEffect = UIBlurEffect(style: .systemChromeMaterial)
-         let blurEffectView = UIVisualEffectView(effect: blurEffect)
-         self.view = blurEffectView
-       
+        loactionSearchBar.delegate = self
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let cityName = loactionSearchBar.text else { return }
+        NotificationCenter.default.post(name: .searchCityNameChosen, object: nil, userInfo: ["cityName": cityName])
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        guard let cityName = loactionSearchBar.text else { return }
+        NotificationCenter.default.post(name: .searchCityNameChosen, object: nil, userInfo: ["cityName": cityName])
+        dismiss(animated: true, completion: nil)
     }
 }
