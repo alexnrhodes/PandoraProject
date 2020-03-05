@@ -188,78 +188,179 @@
                                 <rect key="frame" x="0.0" y="480" width="414" height="416"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="5 Day Weather Forecast" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BOV-oe-6c9">
-                                        <rect key="frame" x="30" y="25" width="193" height="19.5"/>
+                                        <rect key="frame" x="30" y="20" width="193" height="19.5"/>
                                         <fontDescription key="fontDescription" name="Ubuntu-Bold" family="Ubuntu" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="60" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="HPU-av-us4">
-                                        <rect key="frame" x="30" y="69.5" width="354" height="316.5"/>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <prototypes>
-                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="ForecastedWeatherDayCell" id="vaB-48-Qa8" customClass="ForecastedWeatherTableViewCell" customModule="PandoraWeatherProject" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="28" width="354" height="60"/>
-                                                <autoresizingMask key="autoresizingMask"/>
-                                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="vaB-48-Qa8" id="qg5-Ru-Rlh">
-                                                    <rect key="frame" x="0.0" y="0.0" width="354" height="60"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                    <subviews>
-                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="P8o-hN-jmD">
-                                                            <rect key="frame" x="0.0" y="2" width="354" height="64"/>
-                                                            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                                        </view>
-                                                        <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="vEf-As-9Wh" userLabel="DayTempStackView">
-                                                            <rect key="frame" x="20" y="24.5" width="306" height="19.5"/>
-                                                            <subviews>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Monday" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L9v-uK-PFn">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="153" height="19.5"/>
-                                                                    <fontDescription key="fontDescription" name="Ubuntu-Bold" family="Ubuntu" pointSize="17"/>
-                                                                    <nil key="textColor"/>
-                                                                    <nil key="highlightedColor"/>
-                                                                </label>
-                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="70°" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9N2-z7-Y5H">
-                                                                    <rect key="frame" x="153" y="0.0" width="153" height="19.5"/>
-                                                                    <fontDescription key="fontDescription" name="Ubuntu-Bold" family="Ubuntu" pointSize="17"/>
-                                                                    <nil key="textColor"/>
-                                                                    <nil key="highlightedColor"/>
-                                                                </label>
-                                                            </subviews>
-                                                        </stackView>
-                                                    </subviews>
-                                                    <constraints>
-                                                        <constraint firstAttribute="leading" secondItem="P8o-hN-jmD" secondAttribute="leading" id="4rV-OQ-8RY"/>
-                                                        <constraint firstItem="vEf-As-9Wh" firstAttribute="centerY" secondItem="P8o-hN-jmD" secondAttribute="centerY" id="6DJ-6m-VGF"/>
-                                                        <constraint firstItem="P8o-hN-jmD" firstAttribute="top" secondItem="qg5-Ru-Rlh" secondAttribute="top" constant="2" id="AGr-77-0Ne"/>
-                                                        <constraint firstAttribute="bottom" secondItem="P8o-hN-jmD" secondAttribute="bottomMargin" constant="2" id="Inj-H3-MyM"/>
-                                                        <constraint firstItem="P8o-hN-jmD" firstAttribute="trailing" secondItem="qg5-Ru-Rlh" secondAttribute="trailing" id="J5A-uB-BGg"/>
-                                                        <constraint firstItem="P8o-hN-jmD" firstAttribute="trailingMargin" secondItem="vEf-As-9Wh" secondAttribute="trailing" constant="20" id="t9P-ti-jLv"/>
-                                                        <constraint firstItem="vEf-As-9Wh" firstAttribute="leading" secondItem="qg5-Ru-Rlh" secondAttribute="leading" constant="20" id="wGm-bh-yrb"/>
-                                                    </constraints>
-                                                </tableViewCellContentView>
-                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <connections>
-                                                    <outlet property="dayLabel" destination="L9v-uK-PFn" id="LWH-iq-rba"/>
-                                                    <outlet property="floatingView" destination="P8o-hN-jmD" id="fJH-cY-kdv"/>
-                                                    <outlet property="tempLabel" destination="9N2-z7-Y5H" id="Hd4-R0-1HK"/>
-                                                    <segue destination="vU3-4C-WqK" kind="presentation" modalPresentationStyle="fullScreen" id="f2y-H9-Ysr"/>
-                                                </connections>
-                                            </tableViewCell>
-                                        </prototypes>
-                                        <connections>
-                                            <outlet property="dataSource" destination="BYZ-38-t0r" id="oax-3m-Qd5"/>
-                                            <outlet property="delegate" destination="BYZ-38-t0r" id="nsd-eE-QzN"/>
-                                        </connections>
-                                    </tableView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="top" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="8OS-TK-gNN">
+                                        <rect key="frame" x="30" y="56" width="354" height="330"/>
+                                        <subviews>
+                                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="P8o-hN-jmD" userLabel="DayOneView">
+                                                <rect key="frame" x="0.0" y="0.0" width="354" height="58"/>
+                                                <subviews>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="vEf-As-9Wh" userLabel="DayTempStackView">
+                                                        <rect key="frame" x="20" y="19.5" width="314" height="19.5"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Monday" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L9v-uK-PFn">
+                                                                <rect key="frame" x="0.0" y="0.0" width="157" height="19.5"/>
+                                                                <fontDescription key="fontDescription" name="Ubuntu-Bold" family="Ubuntu" pointSize="17"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="70°" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9N2-z7-Y5H">
+                                                                <rect key="frame" x="157" y="0.0" width="157" height="19.5"/>
+                                                                <fontDescription key="fontDescription" name="Ubuntu-Bold" family="Ubuntu" pointSize="17"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                        </subviews>
+                                                    </stackView>
+                                                </subviews>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                <constraints>
+                                                    <constraint firstItem="vEf-As-9Wh" firstAttribute="leading" secondItem="P8o-hN-jmD" secondAttribute="leading" constant="20" id="Op0-0G-O2j"/>
+                                                    <constraint firstAttribute="trailing" secondItem="vEf-As-9Wh" secondAttribute="trailing" constant="20" id="cMa-HW-bNJ"/>
+                                                    <constraint firstItem="vEf-As-9Wh" firstAttribute="centerY" secondItem="P8o-hN-jmD" secondAttribute="centerY" id="e40-Vg-SSL"/>
+                                                </constraints>
+                                            </view>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7Bt-ek-ooW" userLabel="DayTwoView">
+                                                <rect key="frame" x="0.0" y="68" width="354" height="58"/>
+                                                <subviews>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Cla-d0-e8A" userLabel="DayTempStackView">
+                                                        <rect key="frame" x="20" y="19.5" width="314" height="19.5"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Monday" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xHN-gG-2Q9">
+                                                                <rect key="frame" x="0.0" y="0.0" width="157" height="19.5"/>
+                                                                <fontDescription key="fontDescription" name="Ubuntu-Bold" family="Ubuntu" pointSize="17"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="70°" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kW7-TY-kF1">
+                                                                <rect key="frame" x="157" y="0.0" width="157" height="19.5"/>
+                                                                <fontDescription key="fontDescription" name="Ubuntu-Bold" family="Ubuntu" pointSize="17"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                        </subviews>
+                                                    </stackView>
+                                                </subviews>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="trailing" secondItem="Cla-d0-e8A" secondAttribute="trailing" constant="20" id="TA8-tb-KtQ"/>
+                                                    <constraint firstItem="Cla-d0-e8A" firstAttribute="leading" secondItem="7Bt-ek-ooW" secondAttribute="leading" constant="20" id="aMv-PV-K7L"/>
+                                                    <constraint firstItem="Cla-d0-e8A" firstAttribute="centerY" secondItem="7Bt-ek-ooW" secondAttribute="centerY" id="oWs-1p-1pb"/>
+                                                </constraints>
+                                            </view>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GlX-K2-P02" userLabel="DayThreeView">
+                                                <rect key="frame" x="0.0" y="136" width="354" height="58"/>
+                                                <subviews>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="Gwh-tU-Cjg" userLabel="DayTempStackView">
+                                                        <rect key="frame" x="20" y="19.5" width="314" height="19.5"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Monday" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PCB-Mm-sY2">
+                                                                <rect key="frame" x="0.0" y="0.0" width="157" height="19.5"/>
+                                                                <fontDescription key="fontDescription" name="Ubuntu-Bold" family="Ubuntu" pointSize="17"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="70°" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HUV-Tg-x2e">
+                                                                <rect key="frame" x="157" y="0.0" width="157" height="19.5"/>
+                                                                <fontDescription key="fontDescription" name="Ubuntu-Bold" family="Ubuntu" pointSize="17"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                        </subviews>
+                                                    </stackView>
+                                                </subviews>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                <constraints>
+                                                    <constraint firstItem="Gwh-tU-Cjg" firstAttribute="leading" secondItem="GlX-K2-P02" secondAttribute="leading" constant="20" id="1wk-zJ-pA8"/>
+                                                    <constraint firstAttribute="trailing" secondItem="Gwh-tU-Cjg" secondAttribute="trailing" constant="20" id="HMQ-CY-EKX"/>
+                                                    <constraint firstItem="Gwh-tU-Cjg" firstAttribute="centerY" secondItem="GlX-K2-P02" secondAttribute="centerY" id="Ydd-ZA-uw1"/>
+                                                </constraints>
+                                            </view>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tFh-T4-KT5" userLabel="DayFourView">
+                                                <rect key="frame" x="0.0" y="204" width="354" height="58"/>
+                                                <subviews>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="HtE-9G-Ktt" userLabel="DayTempStackView">
+                                                        <rect key="frame" x="20" y="19.5" width="314" height="19.5"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Monday" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5kv-RR-wM8">
+                                                                <rect key="frame" x="0.0" y="0.0" width="157" height="19.5"/>
+                                                                <fontDescription key="fontDescription" name="Ubuntu-Bold" family="Ubuntu" pointSize="17"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="70°" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7nR-fF-afL">
+                                                                <rect key="frame" x="157" y="0.0" width="157" height="19.5"/>
+                                                                <fontDescription key="fontDescription" name="Ubuntu-Bold" family="Ubuntu" pointSize="17"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                        </subviews>
+                                                    </stackView>
+                                                </subviews>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                <constraints>
+                                                    <constraint firstItem="HtE-9G-Ktt" firstAttribute="leading" secondItem="tFh-T4-KT5" secondAttribute="leading" constant="20" id="CdD-9F-eQP"/>
+                                                    <constraint firstAttribute="trailing" secondItem="HtE-9G-Ktt" secondAttribute="trailing" constant="20" id="Goj-cV-pOY"/>
+                                                    <constraint firstItem="HtE-9G-Ktt" firstAttribute="centerY" secondItem="tFh-T4-KT5" secondAttribute="centerY" id="oHt-Cd-Va7"/>
+                                                </constraints>
+                                            </view>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6YI-ph-Flq" userLabel="DayFiveView">
+                                                <rect key="frame" x="0.0" y="272" width="354" height="58"/>
+                                                <subviews>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="dqP-HC-SVj" userLabel="DayTempStackView">
+                                                        <rect key="frame" x="20" y="19.5" width="314" height="19.5"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Monday" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yeq-EB-DZS">
+                                                                <rect key="frame" x="0.0" y="0.0" width="157" height="19.5"/>
+                                                                <fontDescription key="fontDescription" name="Ubuntu-Bold" family="Ubuntu" pointSize="17"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="70°" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qMZ-Oz-EVy">
+                                                                <rect key="frame" x="157" y="0.0" width="157" height="19.5"/>
+                                                                <fontDescription key="fontDescription" name="Ubuntu-Bold" family="Ubuntu" pointSize="17"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                        </subviews>
+                                                    </stackView>
+                                                </subviews>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                <constraints>
+                                                    <constraint firstItem="dqP-HC-SVj" firstAttribute="centerY" secondItem="6YI-ph-Flq" secondAttribute="centerY" id="hYL-PM-bAW"/>
+                                                    <constraint firstItem="dqP-HC-SVj" firstAttribute="leading" secondItem="6YI-ph-Flq" secondAttribute="leading" constant="20" id="k6v-Aa-NGu"/>
+                                                    <constraint firstAttribute="trailing" secondItem="dqP-HC-SVj" secondAttribute="trailing" constant="20" id="vWh-jJ-kgP"/>
+                                                </constraints>
+                                            </view>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstItem="GlX-K2-P02" firstAttribute="leading" secondItem="8OS-TK-gNN" secondAttribute="leading" id="4sE-Nz-Eqy"/>
+                                            <constraint firstItem="P8o-hN-jmD" firstAttribute="leading" secondItem="8OS-TK-gNN" secondAttribute="leading" id="ArG-je-tgb"/>
+                                            <constraint firstAttribute="trailing" secondItem="6YI-ph-Flq" secondAttribute="trailing" id="BZk-Jb-0Wa"/>
+                                            <constraint firstItem="7Bt-ek-ooW" firstAttribute="leading" secondItem="8OS-TK-gNN" secondAttribute="leading" id="VDX-Ov-OD8"/>
+                                            <constraint firstItem="tFh-T4-KT5" firstAttribute="leading" secondItem="8OS-TK-gNN" secondAttribute="leading" id="XJG-Yg-jfZ"/>
+                                            <constraint firstItem="6YI-ph-Flq" firstAttribute="leading" secondItem="8OS-TK-gNN" secondAttribute="leading" id="boo-pM-ySM"/>
+                                            <constraint firstAttribute="trailing" secondItem="P8o-hN-jmD" secondAttribute="trailing" id="dGl-rF-JMn"/>
+                                            <constraint firstAttribute="trailing" secondItem="tFh-T4-KT5" secondAttribute="trailing" id="fq6-Fo-rQo"/>
+                                            <constraint firstAttribute="trailing" secondItem="GlX-K2-P02" secondAttribute="trailing" id="hVo-QC-NDc"/>
+                                            <constraint firstItem="P8o-hN-jmD" firstAttribute="top" secondItem="8OS-TK-gNN" secondAttribute="top" id="ocY-wZ-ROd"/>
+                                            <constraint firstAttribute="trailing" secondItem="7Bt-ek-ooW" secondAttribute="trailing" id="qJQ-Iy-grK"/>
+                                        </constraints>
+                                    </stackView>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemGrayColor" red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstItem="BOV-oe-6c9" firstAttribute="leading" secondItem="l3J-XD-hZb" secondAttribute="leading" constant="30" id="4in-tp-3qW"/>
-                                    <constraint firstItem="HPU-av-us4" firstAttribute="leading" secondItem="l3J-XD-hZb" secondAttribute="leading" constant="30" id="9wc-QR-vcX"/>
+                                    <constraint firstAttribute="bottom" secondItem="8OS-TK-gNN" secondAttribute="bottom" constant="30" id="8qL-IX-wgN"/>
                                     <constraint firstAttribute="trailing" relation="lessThanOrEqual" secondItem="BOV-oe-6c9" secondAttribute="trailing" constant="191" id="KOR-sl-SED"/>
-                                    <constraint firstAttribute="trailing" secondItem="HPU-av-us4" secondAttribute="trailing" constant="30" id="Spz-OJ-Jcf"/>
-                                    <constraint firstItem="BOV-oe-6c9" firstAttribute="top" secondItem="l3J-XD-hZb" secondAttribute="top" constant="25" id="djc-o0-TmC"/>
-                                    <constraint firstItem="HPU-av-us4" firstAttribute="top" secondItem="BOV-oe-6c9" secondAttribute="bottom" constant="25" id="j3e-pf-7fn"/>
-                                    <constraint firstAttribute="bottom" secondItem="HPU-av-us4" secondAttribute="bottom" constant="30" id="l16-ct-pai"/>
+                                    <constraint firstItem="8OS-TK-gNN" firstAttribute="top" secondItem="BOV-oe-6c9" secondAttribute="bottom" constant="16.5" id="L8M-jp-tUF"/>
+                                    <constraint firstAttribute="trailing" secondItem="8OS-TK-gNN" secondAttribute="trailing" constant="30" id="OKj-3C-XvY"/>
+                                    <constraint firstItem="BOV-oe-6c9" firstAttribute="top" secondItem="l3J-XD-hZb" secondAttribute="top" constant="20" id="djc-o0-TmC"/>
+                                    <constraint firstItem="8OS-TK-gNN" firstAttribute="leading" secondItem="l3J-XD-hZb" secondAttribute="leading" constant="30" id="zII-oD-VIb"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -290,7 +391,6 @@
                         <outlet property="cloudPercentageLabel" destination="398-cB-x5B" id="mxC-c9-zbe"/>
                         <outlet property="currentTempLabel" destination="pwZ-YC-XWq" id="jHE-5r-T3A"/>
                         <outlet property="favoriteButton" destination="bqv-D6-ZXq" id="BHO-ly-6u5"/>
-                        <outlet property="forecastedWeatherTableView" destination="HPU-av-us4" id="1Wi-Ki-yMQ"/>
                         <outlet property="highLabel" destination="tyL-Hy-9wY" id="mPA-xg-30L"/>
                         <outlet property="lowLabel" destination="Lzo-iC-Rin" id="fGi-LW-2WR"/>
                         <outlet property="sunriseLabel" destination="oGW-xE-syw" id="pg3-YO-9a7"/>
@@ -299,6 +399,21 @@
                         <outlet property="weatherSegmentedControl" destination="ZmM-KX-rMS" id="UJA-Ta-g2Z"/>
                         <outlet property="weatherTypeLabel" destination="X1N-pE-OyK" id="O6S-B4-lU2"/>
                         <outlet property="windSpeedLabel" destination="nVt-Jy-Z4a" id="OIf-HP-Jf1"/>
+                        <outletCollection property="forecastedDayViewDateLabels" destination="L9v-uK-PFn" collectionClass="NSMutableArray" id="6qI-j2-gmR"/>
+                        <outletCollection property="forecastedDayViewTempLabels" destination="9N2-z7-Y5H" collectionClass="NSMutableArray" id="pIe-oD-Gpp"/>
+                        <outletCollection property="forecastedDayViewDateLabels" destination="xHN-gG-2Q9" collectionClass="NSMutableArray" id="fmE-aM-dVQ"/>
+                        <outletCollection property="forecastedDayViewDateLabels" destination="PCB-Mm-sY2" collectionClass="NSMutableArray" id="bAe-P0-K1n"/>
+                        <outletCollection property="forecastedDayViewDateLabels" destination="5kv-RR-wM8" collectionClass="NSMutableArray" id="Hfj-9B-Tve"/>
+                        <outletCollection property="forecastedDayViewDateLabels" destination="yeq-EB-DZS" collectionClass="NSMutableArray" id="i99-lA-6tK"/>
+                        <outletCollection property="forecastedDayViewTempLabels" destination="kW7-TY-kF1" collectionClass="NSMutableArray" id="Sw9-Ks-03C"/>
+                        <outletCollection property="forecastedDayViewTempLabels" destination="HUV-Tg-x2e" collectionClass="NSMutableArray" id="dnH-xX-pTh"/>
+                        <outletCollection property="forecastedDayViewTempLabels" destination="7nR-fF-afL" collectionClass="NSMutableArray" id="Xtd-id-axI"/>
+                        <outletCollection property="forecastedDayViewTempLabels" destination="qMZ-Oz-EVy" collectionClass="NSMutableArray" id="i6q-7u-rSa"/>
+                        <outletCollection property="forecastedWeatherDayViews" destination="7Bt-ek-ooW" collectionClass="NSMutableArray" id="DI1-aX-Vt1"/>
+                        <outletCollection property="forecastedWeatherDayViews" destination="GlX-K2-P02" collectionClass="NSMutableArray" id="cC9-bh-nf9"/>
+                        <outletCollection property="forecastedWeatherDayViews" destination="tFh-T4-KT5" collectionClass="NSMutableArray" id="EpX-iT-prw"/>
+                        <outletCollection property="forecastedWeatherDayViews" destination="6YI-ph-Flq" collectionClass="NSMutableArray" id="nPt-um-tt4"/>
+                        <outletCollection property="forecastedWeatherDayViews" destination="P8o-hN-jmD" collectionClass="NSMutableArray" id="kWP-cF-QFY"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
