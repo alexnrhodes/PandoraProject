@@ -26,8 +26,16 @@ class CurrentWeatherViewController: UIViewController {
     @IBOutlet weak var currentTempLabel: UILabel!
     @IBOutlet weak var weatherTypeLabel: UILabel!
     @IBOutlet var forecastedWeatherDayViews: [UIView]!
-    @IBOutlet var forecastedDayViewDateLabels: [UILabel]!
-    @IBOutlet var forecastedDayViewTempLabels: [UILabel]!
+    @IBOutlet weak var dayOneDayLabel: UILabel!
+    @IBOutlet weak var dayTwoDayLabel: UILabel!
+    @IBOutlet weak var dayThreeDayLabel: UILabel!
+    @IBOutlet weak var dayFourDayLabel: UILabel!
+    @IBOutlet weak var dayFiveDayLabel: UILabel!
+    @IBOutlet weak var dayOneTempLabel: UILabel!
+    @IBOutlet weak var dayTwoTempLabel: UILabel!
+    @IBOutlet weak var dayThreeTempLabel: UILabel!
+    @IBOutlet weak var dayFourTempLabel: UILabel!
+    @IBOutlet weak var dayFiveTempLabel: UILabel!
     
     
     // MARK: Properties
@@ -54,23 +62,27 @@ class CurrentWeatherViewController: UIViewController {
         }
     }
     
+    var forecastedWeatherDay: ForecastedWeatherDayViewModel?
+    var currentCityName: String?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        addTapGestures()
         updateViews()
         coreLocationSetup()
         
     }
     
     
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destination.
-     // Pass the selected object to the new view controller.
-     }
-     */
+    
+    // MARK: - Navigation
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let destination = segue.destination as? ForecastedWeatherDayViewController {
+            destination.forecastedWeatherDay = self.forecastedWeatherDay
+            destination.cityName = self.currentCityName
+        }
+    }
     
 }
 
@@ -115,6 +127,7 @@ class CurrentWeatherViewController: UIViewController {
 extension CurrentWeatherViewController {
     
     // Networking
+    
     func getWeatherByCurrentLocation() {
         // fetch the current weather by location upon app launch
         network.fetchWeatherByLocation(location: currentLocation) { (currentWeather, error) in
@@ -146,17 +159,22 @@ extension CurrentWeatherViewController {
     }
     
     // UI
+    
     func updateViews() {
         
+        let temps = fiveDayForecast.map { $0.map { $0.temp }}
+        let days = fiveDayForecast.map { $0.map { $0.date }}
+        
+        // Update five day UI views
         DispatchQueue.main.async {
-            self.forecastedWeatherDayViews.map{$0.map{ $0.layer.cornerRadius = 30 }}
+            self.forecastedWeatherDayViews.map{$0.map { $0.layer.cornerRadius = 30 }}
         }
-       
+        
         
         if let currentWeather = currentWeather  {
             DispatchQueue.main.async {
                 // update UI elements on current weather
-            self.weatherSegmentedControl.setTitle("\(currentWeather.cityName)", forSegmentAt: 0)
+                self.weatherSegmentedControl.setTitle("\(currentWeather.cityName)", forSegmentAt: 0)
                 self.currentTempLabel.text = "\(currentWeather.temp)°"
                 self.highLabel.text = "\(currentWeather.tempMax)°"
                 self.lowLabel.text = "\(currentWeather.tempMin)°"
@@ -167,12 +185,81 @@ extension CurrentWeatherViewController {
             }
         }
         
-        if let fiveDayForecast = fiveDayForecast {
+        if let fiveDayForecast = fiveDayForecast, let days = days, let temps = temps {
+            
             DispatchQueue.main.async {
                 print(fiveDayForecast)
-                #warning("May not need this")
+                self.dayOneDayLabel.text = "\(days[0])"
+                self.dayTwoDayLabel.text = "\(days[1])"
+                self.dayThreeDayLabel.text = "\(days[2])"
+                self.dayFourDayLabel.text = "\(days[3])"
+                self.dayFiveDayLabel.text = "\(days[4])"
+                
+                self.dayOneTempLabel.text = "\(temps[0])"
+                self.dayTwoTempLabel.text = "\(temps[1])"
+                self.dayThreeTempLabel.text = "\(temps[2])"
+                self.dayFourTempLabel.text = "\(temps[3])"
+                self.dayFiveTempLabel.text = "\(temps[4])"
+                
             }
         }
+    }
+}
+
+extension CurrentWeatherViewController {
+    
+    // Tap Gesture Setup
+    
+    func addTapGestures() {
+        // Create gestures
+        let tapOne = UITapGestureRecognizer(target: self, action: #selector(self.tapOne))
+        let tapTwo = UITapGestureRecognizer(target: self, action: #selector(self.tapTwo))
+        let tapThree = UITapGestureRecognizer(target: self, action: #selector(self.tapThree))
+        let tapFour = UITapGestureRecognizer(target: self, action: #selector(self.tapFour))
+        let tapFive = UITapGestureRecognizer(target: self, action: #selector(self.tapFive))
+        
+        let views = self.forecastedWeatherDayViews.map { $0 }.map { $0 }
+        
+        // Add gestures to views
+        views![0].addGestureRecognizer(tapOne)
+        views![1].addGestureRecognizer(tapTwo)
+        views![2].addGestureRecognizer(tapThree)
+        views![3].addGestureRecognizer(tapFour)
+        views![4].addGestureRecognizer(tapFive)
+        
+    }
+    
+    @objc func tapOne() {
+        self.forecastedWeatherDay = fiveDayForecast[0]
+        checkForCurrentWeather()
+        
+    }
+    
+    @objc func tapTwo() {
+        checkForCurrentWeather()
+        self.forecastedWeatherDay = fiveDayForecast[1]
+    }
+    
+    @objc func tapThree() {
+        self.forecastedWeatherDay = fiveDayForecast[2]
+        checkForCurrentWeather()
+    }
+    
+    @objc func tapFour() {
+        self.forecastedWeatherDay = fiveDayForecast[3]
+        checkForCurrentWeather()
+    }
+    
+    @objc func tapFive() {
+        self.forecastedWeatherDay = fiveDayForecast[4]
+        checkForCurrentWeather()
+        
+    }
+    
+    func checkForCurrentWeather() {
+        guard let currentWeather = currentWeather else { return }
+        self.currentCityName = currentWeather.cityName
+        performSegue(withIdentifier: "ForecastedWeatherDetailSegue", sender: self)
     }
 }
 
@@ -228,4 +315,12 @@ extension CurrentWeatherViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         checkLocationAuthorization()
     }
+}
+
+enum TapRecognizer: String {
+    case tapOne
+    case tapTwo
+    case tapThree
+    case tapFour
+    case tapFive
 }
