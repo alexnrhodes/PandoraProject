@@ -19,13 +19,13 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let cityName = loactionSearchBar.text else { return }
-        NotificationCenter.default.post(name: .searchCityNameChosen, object: nil, userInfo: ["cityName": cityName])
+        NotificationCenter.default.post(name: .searchCityNameChosen, object: nil, userInfo: ["name": cityName])
         dismiss(animated: true, completion: nil)
     }
     
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
         guard let cityName = loactionSearchBar.text else { return }
-        NotificationCenter.default.post(name: .searchCityNameChosen, object: nil, userInfo: ["cityName": cityName])
+        NotificationCenter.default.post(name: .searchCityNameChosen, object: nil, userInfo: ["name": cityName])
         dismiss(animated: true, completion: nil)
     }
 }
