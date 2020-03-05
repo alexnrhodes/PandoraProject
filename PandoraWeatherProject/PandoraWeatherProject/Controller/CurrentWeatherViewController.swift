@@ -40,14 +40,25 @@ class CurrentWeatherViewController: UIViewController {
     
     // MARK: Properties
     
-    
+    let geocoder = CLGeocoder()
+    let locationManager = CLLocationManager()
     var network = Network()
-    var locationManager = CLLocationManager()
     
+    var forecastedWeatherDay: ForecastedWeatherDayViewModel?
+    var currentCityName: String?
+    var searchedCity: String? {
+        didSet {
+           getCLLocationFromSearch()
+        }
+    }
+    var searchedLocation: CLLocation! {
+        didSet {
+           performFetchesWithSearchedLocation()
+        }
+    }
     var currentLocation: CLLocation! {
         didSet {
-            getWeatherByCurrentLocation()
-            getForecastedWeather()
+            performFetchedByCurrentLocation()
         }
     }
     var currentWeather: CurrentWeatherViewModel? {
@@ -55,18 +66,15 @@ class CurrentWeatherViewController: UIViewController {
             updateViews()
         }
     }
-    
     var fiveDayForecast: [ForecastedWeatherDayViewModel]! {
         didSet {
             updateViews()
         }
     }
     
-    var forecastedWeatherDay: ForecastedWeatherDayViewModel?
-    var currentCityName: String?
-    
     override func viewDidLoad() {
         super.viewDidLoad()
+        addObservers()
         addTapGestures()
         updateViews()
         coreLocationSetup()
@@ -83,7 +91,6 @@ class CurrentWeatherViewController: UIViewController {
             destination.cityName = self.currentCityName
         }
     }
-    
 }
 
 // MARK: Methods
@@ -91,10 +98,10 @@ class CurrentWeatherViewController: UIViewController {
 
 extension CurrentWeatherViewController {
     
-    // Networking
+    // MARK: Networking
     
-    func getWeatherByCurrentLocation() {
-        // fetch the current weather by location upon app launch
+    func performFetchedByCurrentLocation() {
+        // fetch the current weather for current location
         network.fetchWeatherByLocation(location: currentLocation) { (currentWeather, error) in
             
             if let error = error {
@@ -106,9 +113,8 @@ extension CurrentWeatherViewController {
                 self.currentWeather = CurrentWeatherViewModel(currentWeather: currentWeather)
             }
         }
-    }
-    
-    func getForecastedWeather() {
+        
+        // fetch five day for current location
         network.fetchFiveDayByLocation(location: currentLocation) { (forecastedWeatherDays, error) in
             
             if let error = error {
@@ -123,7 +129,53 @@ extension CurrentWeatherViewController {
         }
     }
     
-    // UI
+    func performFetchesWithSearchedLocation() {
+        
+        network.fetchWeatherByLocation(location: searchedLocation) { (currentWeather, error) in
+            
+            if let error = error {
+                NSLog("Error retrieving weather by current location: \(error)")
+            }
+            
+            if let currentWeather = currentWeather {
+                print(currentWeather)
+                self.currentWeather = CurrentWeatherViewModel(currentWeather: currentWeather)
+            }
+        }
+        
+        // fetch five day for current location
+        network.fetchFiveDayByLocation(location: searchedLocation) { (forecastedWeatherDays, error) in
+            
+            if let error = error {
+                NSLog("Error retrieving five day forecast by current location: \(error)")
+            }
+            
+            if let forecastedWeatherDays = forecastedWeatherDays {
+                let day = forecastedWeatherDays.map {ForecastedWeatherDayViewModel(forecastedWeatherDay: $0)}
+                self.fiveDayForecast = day
+                
+            }
+        }
+    }
+
+    
+    
+    func getCLLocationFromSearch() {
+        // Obtain CL Location from the searched city
+        guard let searchedCity = searchedCity  else { return }
+        geocoder.geocodeAddressString(searchedCity) { (placeMarks, error) in
+            if let error = error {
+                NSLog("Error getting CLLocation from searchTerm: \(searchedCity) with error:\(error)")
+                return
+            }
+            
+            guard let placemark = placeMarks?.first,
+                let location = placemark.location else { return }
+            self.searchedLocation = location
+        }
+    }
+    
+    // MARK: UI
     
     func updateViews() {
         
@@ -168,12 +220,16 @@ extension CurrentWeatherViewController {
                 
             }
         }
-    }
-}
+        
+        if let searchedCity = searchedCity {
+            DispatchQueue.main.async {
+                self.weatherSegmentedControl.setTitle(searchedCity, forSegmentAt: 0)
 
-extension CurrentWeatherViewController {
+            }
+        }
+    }
     
-    // Tap Gesture Setup
+    // MARK: Tap Gesture Setup + Objc Methods
     
     func addTapGestures() {
         // Create gestures
@@ -226,7 +282,19 @@ extension CurrentWeatherViewController {
         self.currentCityName = currentWeather.cityName
         performSegue(withIdentifier: "ForecastedWeatherDetailSegue", sender: self)
     }
+    
+    // MARK: Observers
+    
+    func addObservers() {
+        NotificationCenter.default.addObserver(forName: .searchCityNameChosen, object: nil, queue: OperationQueue.main) { (notification) in
+            guard let userInfo = notification.userInfo,
+            let cityName = userInfo["name"] else {return}
+            self.searchedCity = "\(cityName)"
+            
+        }
+    }
 }
+
 
 // MARK: CoreLocation
 
@@ -272,20 +340,12 @@ extension CurrentWeatherViewController: CLLocationManagerDelegate {
     }
     
     
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        currentLocation = locations.last
-        // performFetchesByLocation(location: userLocation!)
-    }
-    
-    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-        checkLocationAuthorization()
-    }
+//    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+//        currentLocation = locations.last
+//    }
+//
+//    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+//        checkLocationAuthorization()
+//    }
 }
 
-enum TapRecognizer: String {
-    case tapOne
-    case tapTwo
-    case tapThree
-    case tapFour
-    case tapFive
-}

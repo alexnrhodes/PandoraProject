@@ -388,7 +388,7 @@
                             <barButtonItem image="star" catalog="system" id="bqv-D6-ZXq"/>
                             <barButtonItem title="Change Location" id="Msb-Q0-Kkg">
                                 <connections>
-                                    <segue destination="jf5-T4-WBH" kind="presentation" modalPresentationStyle="overFullScreen" id="Z4u-mu-RIj"/>
+                                    <segue destination="jf5-T4-WBH" kind="presentation" modalPresentationStyle="automatic" id="Z4u-mu-RIj"/>
                                 </connections>
                             </barButtonItem>
                         </rightBarButtonItems>
@@ -432,20 +432,32 @@
         <scene sceneID="kDT-pi-zRm">
             <objects>
                 <viewController id="jf5-T4-WBH" customClass="SearchViewController" customModule="PandoraWeatherProject" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" alpha="0.59999999999999998" contentMode="scaleToFill" id="wgi-gE-FU1" userLabel="MainView">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                    <view key="view" contentMode="scaleToFill" id="wgi-gE-FU1" userLabel="MainView">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hBr-9u-xbh">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="IlI-CR-bow">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                </view>
+                                <blurEffect style="systemMaterial"/>
+                            </visualEffectView>
                             <searchBar contentMode="redraw" searchBarStyle="minimal" translatesAutoresizingMaskIntoConstraints="NO" id="0X7-B6-Hgh">
-                                <rect key="frame" x="50" y="115" width="314" height="56"/>
+                                <rect key="frame" x="50" y="71" width="314" height="56"/>
                                 <textInputTraits key="textInputTraits"/>
                             </searchBar>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="0X7-B6-Hgh" firstAttribute="top" secondItem="ZN3-xd-59n" secondAttribute="top" constant="71" id="2eC-Pf-7b8"/>
+                            <constraint firstItem="hBr-9u-xbh" firstAttribute="top" secondItem="wgi-gE-FU1" secondAttribute="top" id="D6g-mr-bpW"/>
+                            <constraint firstItem="hBr-9u-xbh" firstAttribute="trailing" secondItem="ZN3-xd-59n" secondAttribute="trailing" id="KWi-KU-Ooa"/>
+                            <constraint firstItem="hBr-9u-xbh" firstAttribute="leading" secondItem="ZN3-xd-59n" secondAttribute="leading" id="SEO-X3-O3e"/>
                             <constraint firstItem="0X7-B6-Hgh" firstAttribute="trailing" secondItem="ZN3-xd-59n" secondAttribute="trailing" constant="-50" id="Sf1-vM-DrB"/>
                             <constraint firstItem="0X7-B6-Hgh" firstAttribute="leading" secondItem="ZN3-xd-59n" secondAttribute="leading" constant="50" id="YSF-uI-KSN"/>
+                            <constraint firstAttribute="bottom" secondItem="hBr-9u-xbh" secondAttribute="bottom" id="enj-gk-IZJ"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="ZN3-xd-59n"/>
                     </view>
