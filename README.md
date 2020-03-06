@@ -1,12 +1,6 @@
 # PandoraProject
 This is a project used to display my proficiency in iOS development.
 
-A description of the overall iOS application
-A high level architectural overview of your iOS application. e.g. names, relationships and purposes of all UIViewControllers and UIViews
-Explanations for and descriptions of the design patterns you leveraged
-Screenshots of each View and descriptions of the overall user flow
-
-
 Here, we have a simple weather app using the openweathermap.org api. With this app, you see weather by your current location upon launch. You can also search for a location by city name as well as set a favorite location. 
 
 <img src="PandoraProjectImages/RequestLocationView.png" width="200" > <img src="PandoraProjectImages/CurrentLocation.png" width="200" >
