@@ -29,6 +29,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fQl-2u-Ptf">
+                                <rect key="frame" x="0.0" y="88" width="414" height="808"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="fzw-75-gLB">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="808"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                </view>
+                                <blurEffect style="regular"/>
+                            </visualEffectView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sgw-9L-QeC" userLabel="CurrentWeatherView">
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="480"/>
                                 <subviews>
@@ -394,9 +402,13 @@
                             <constraint firstItem="l3J-XD-hZb" firstAttribute="top" secondItem="sgw-9L-QeC" secondAttribute="bottom" id="4mZ-UP-FvZ"/>
                             <constraint firstItem="sgw-9L-QeC" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="5ig-Nf-yZi"/>
                             <constraint firstItem="sgw-9L-QeC" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="QGa-B3-n65"/>
+                            <constraint firstItem="fQl-2u-Ptf" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="UbQ-pE-xl6"/>
                             <constraint firstItem="l3J-XD-hZb" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="cfa-M5-QlL"/>
                             <constraint firstItem="sgw-9L-QeC" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="dAe-bI-F1p"/>
                             <constraint firstAttribute="bottom" secondItem="l3J-XD-hZb" secondAttribute="bottom" id="fly-rJ-hH9"/>
+                            <constraint firstAttribute="bottom" secondItem="fQl-2u-Ptf" secondAttribute="bottom" id="nPW-NB-JI6"/>
+                            <constraint firstItem="fQl-2u-Ptf" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="nbu-zl-6ph"/>
+                            <constraint firstItem="fQl-2u-Ptf" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="o8f-1Y-DS2"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="l3J-XD-hZb" secondAttribute="trailing" id="pbI-yf-ng4"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -416,6 +428,7 @@
                         </rightBarButtonItems>
                     </navigationItem>
                     <connections>
+                        <outlet property="blurView" destination="fQl-2u-Ptf" id="tzV-Jt-BjH"/>
                         <outlet property="changeLocationButton" destination="Msb-Q0-Kkg" id="ZJz-dZ-Kin"/>
                         <outlet property="cloudPercentageLabel" destination="398-cB-x5B" id="mxC-c9-zbe"/>
                         <outlet property="currentTempLabel" destination="pwZ-YC-XWq" id="jHE-5r-T3A"/>

@@ -37,6 +37,7 @@ class CurrentWeatherViewController: UIViewController {
     @IBOutlet weak var dayFourTempLabel: UILabel!
     @IBOutlet weak var dayFiveTempLabel: UILabel!
     @IBOutlet weak var favoriteBarButtonItem: UIBarButtonItem!
+    @IBOutlet weak var blurView: UIVisualEffectView!
     
     
     // MARK: Properties
@@ -111,13 +112,13 @@ class CurrentWeatherViewController: UIViewController {
             getCLLocationFromFavoriteCity()
             performFetchesByFavoriteLocation()
             updateViews()
-        }
-        
-        if favoriteLocation == nil {
-            let alert = UIAlertController(title: "Oops!", message: "Please select a favorite city by using the star button!", preferredStyle: .alert)
-            let action = UIAlertAction(title: "Dismiss", style: .default)
-            alert.addAction(action)
-            self.present(alert, animated: true)
+            
+            if UserDefaults.standard.value(forKey: "favoriteCityWeather") == nil {
+                let alert = UIAlertController(title: "Oops!", message: "Please select a favorite city by using the star button!", preferredStyle: .alert)
+                let action = UIAlertAction(title: "Dismiss", style: .default)
+                alert.addAction(action)
+                self.present(alert, animated: true)
+            }
         }
     }
     
@@ -330,6 +331,23 @@ extension CurrentWeatherViewController {
                 self.weatherSegmentedControl.selectedSegmentIndex = 0
             }
         }
+        
+        
+        if displayedCurrentWeather == nil {
+            DispatchQueue.main.async {
+                self.view.bringSubviewToFront(self.blurView)
+            }
+        } else {
+            DispatchQueue.main.async {
+                self.view.sendSubviewToBack(self.blurView)
+            }
+        }
+        
+        if searchedLocation != nil {
+            DispatchQueue.main.async {
+                self.weatherSegmentedControl.selectedSegmentIndex = 0
+            }
+        }
     }
     
     // MARK: Tap Gesture Setup + Objc Methods
@@ -360,8 +378,9 @@ extension CurrentWeatherViewController {
     }
     
     @objc func tapTwo() {
-        checkForCurrentWeather()
         self.forecastedWeatherDay = displayedFiveDayForecast[1]
+        checkForCurrentWeather()
+
     }
     
     @objc func tapThree() {
@@ -430,6 +449,7 @@ extension CurrentWeatherViewController: CLLocationManagerDelegate {
             locationManager.requestAlwaysAuthorization()
             locationManager.requestWhenInUseAuthorization()
             locationManager.startUpdatingLocation()
+            updateViews()
         } else {
             locationManager.startUpdatingLocation()
             self.currentLocation = locationManager.location
