@@ -342,12 +342,6 @@ extension CurrentWeatherViewController {
                 self.view.sendSubviewToBack(self.blurView)
             }
         }
-        
-        if searchedLocation != nil {
-            DispatchQueue.main.async {
-                self.weatherSegmentedControl.selectedSegmentIndex = 0
-            }
-        }
     }
     
     // MARK: Tap Gesture Setup + Objc Methods
