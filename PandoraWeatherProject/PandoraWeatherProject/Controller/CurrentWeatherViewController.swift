@@ -48,8 +48,11 @@ class CurrentWeatherViewController: UIViewController {
     
     var forecastedWeatherDay: ForecastedWeatherDayViewModel?
     var currentCityName: String?
-    var searchedCity: String?
-    
+    var searchedCity: String? {
+        didSet {
+            getCLLocationFromSearch()
+        }
+    }
     var favoriteLocation: CLLocation? {
         didSet {
             performFetchesByFavoriteLocation()
@@ -57,7 +60,7 @@ class CurrentWeatherViewController: UIViewController {
     }
     var searchedLocation: CLLocation! {
         didSet {
-           performFetchesBySearchedLocation()
+            performFetchesBySearchedLocation()
         }
     }
     var currentLocation: CLLocation! {
@@ -76,6 +79,8 @@ class CurrentWeatherViewController: UIViewController {
         }
     }
     
+    // MARK: Lifelcycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         addObservers()
@@ -85,6 +90,13 @@ class CurrentWeatherViewController: UIViewController {
         
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        weatherSegmentedControl.selectedSegmentIndex = 0
+    }
+    
+    // MARK: IBActions
+    
     @IBAction func favoriteButtonTapped(_ sender: UIBarButtonItem) {
         guard let currentWeather = displayedCurrentWeather  else { return }
         UserDefaults.standard.set(currentWeather.cityName, forKey: "favoriteCityWeather")
@@ -92,9 +104,20 @@ class CurrentWeatherViewController: UIViewController {
     }
     
     @IBAction func weatherSegmentedControlChanged(_ sender: UISegmentedControl) {
-        
-        if sender.selectedSegmentIndex == 1 {
+        if sender.selectedSegmentIndex == 0 {
+            performFetchesBySearchedLocation()
+            updateViews()
+        } else if sender.selectedSegmentIndex == 1 {
             getCLLocationFromFavoriteCity()
+            performFetchesByFavoriteLocation()
+            updateViews()
+        }
+        
+        if favoriteLocation == nil {
+            let alert = UIAlertController(title: "Oops!", message: "Please select a favorite city by using the star button!", preferredStyle: .alert)
+            let action = UIAlertAction(title: "Dismiss", style: .default)
+            alert.addAction(action)
+            self.present(alert, animated: true)
         }
     }
     
@@ -108,8 +131,6 @@ class CurrentWeatherViewController: UIViewController {
     }
 }
 
-// MARK: IBActions
-
 // MARK: Methods
 
 
@@ -118,6 +139,7 @@ extension CurrentWeatherViewController {
     // MARK: Networking
     
     func performFetchedByCurrentLocation() {
+        guard let currentLocation = currentLocation else { return }
         // fetch the current weather for current location
         network.fetchWeatherByLocation(location: currentLocation) { (currentWeather, error) in
             
@@ -147,7 +169,7 @@ extension CurrentWeatherViewController {
     }
     
     func performFetchesBySearchedLocation() {
-        
+        guard let searchedLocation = searchedLocation else { return }
         // fetch current weather by seearched location
         network.fetchWeatherByLocation(location: searchedLocation) { (currentWeather, error) in
             
@@ -175,8 +197,9 @@ extension CurrentWeatherViewController {
             }
         }
     }
-
+    
     func performFetchesByFavoriteLocation() {
+        
         guard let favoriteCity = favoriteLocation else { return }
         
         network.fetchWeatherByLocation(location: favoriteCity) { (currentWeather, error) in
@@ -206,28 +229,15 @@ extension CurrentWeatherViewController {
         }
     }
     
-    func cityNameToLocation(_ locationString: String) -> CLLocation {
-        var newLocation: CLLocation!
-        
-       geocoder.geocodeAddressString(locationString) { (placeMarks, error) in
-            if let error = error {
-                NSLog("Error getting CLLocation from searchTerm: \(locationString) with error:\(error)")
-                return
-            }
-            
-            guard let placemark = placeMarks?.first,
-                let location = placemark.location else { return }
-            newLocation = location
-        }
-
-        return newLocation
-    }
-    
     func getCLLocationFromSearch() {
         // Obtain CL Location from the searched city
         guard let searchedCity = searchedCity  else { return }
         geocoder.geocodeAddressString(searchedCity) { (placeMarks, error) in
             if let error = error {
+                let alert = UIAlertController(title: "Oops!", message: "We could not find that city!", preferredStyle: .alert)
+                let action = UIAlertAction(title: "Dismiss", style: .default)
+                alert.addAction(action)
+                self.present(alert, animated: true)
                 NSLog("Error getting CLLocation from searchTerm: \(searchedCity) with error:\(error)")
                 return
             }
@@ -240,19 +250,19 @@ extension CurrentWeatherViewController {
     
     func getCLLocationFromFavoriteCity() {
         guard let favoriteCity = UserDefaults.standard.value(forKey: "favoriteCityWeather") else {return}
-
-           // Obtain CL Location from the searched city
-           geocoder.geocodeAddressString("\(favoriteCity)") { (placeMarks, error) in
-               if let error = error {
-                   NSLog("Error getting CLLocation from searchTerm: \(favoriteCity) with error:\(error)")
-                   return
-               }
-               
-               guard let placemark = placeMarks?.first,
-                   let location = placemark.location else { return }
-               self.favoriteLocation = location
-           }
-       }
+        
+        // Obtain CL Location from the searched city
+        geocoder.geocodeAddressString("\(favoriteCity)") { (placeMarks, error) in
+            
+            if let error = error {
+                NSLog("Error getting CLLocation from searchTerm: \(favoriteCity) with error:\(error)")
+            }
+            
+            guard let placemark = placeMarks?.first,
+                let location = placemark.location else { return }
+            self.favoriteLocation = location
+        }
+    }
     
     // MARK: UI
     
@@ -264,6 +274,7 @@ extension CurrentWeatherViewController {
         // Update five day UI views
         DispatchQueue.main.async {
             self.forecastedWeatherDayViews.map{$0.map { $0.layer.cornerRadius = 30 }}
+            self.navigationController?.navigationBar.setValue(true, forKey: "hidesShadow")
         }
         
         
@@ -303,14 +314,20 @@ extension CurrentWeatherViewController {
         if let searchedCity = searchedCity {
             DispatchQueue.main.async {
                 self.weatherSegmentedControl.setTitle(searchedCity, forSegmentAt: 0)
-
+                
             }
         }
         
         if let favoriteWeather = UserDefaults.standard.value(forKey: "favoriteCityWeather") {
             DispatchQueue.main.async {
-                self.favoriteButton.image = .strokedCheckmark
+                self.favoriteButton.image = UIImage(systemName: "star.fill")
                 self.weatherSegmentedControl.setTitle("\(favoriteWeather)", forSegmentAt: 1)
+            }
+        }
+        
+        if UserDefaults.standard.value(forKey: "favoriteCityWeather") == nil {
+            DispatchQueue.main.async {
+                self.weatherSegmentedControl.selectedSegmentIndex = 0
             }
         }
     }
@@ -374,9 +391,8 @@ extension CurrentWeatherViewController {
     func addObservers() {
         NotificationCenter.default.addObserver(forName: .searchCityNameChosen, object: nil, queue: OperationQueue.main) { (notification) in
             guard let userInfo = notification.userInfo,
-            let cityName = userInfo["name"] else {return}
+                let cityName = userInfo["name"] else {return}
             self.searchedCity = "\(cityName)"
-            self.searchedLocation = self.cityNameToLocation("\(cityName)")
             
         }
     }
@@ -389,35 +405,14 @@ extension CurrentWeatherViewController: CLLocationManagerDelegate {
     
     func coreLocationSetup() {
         
-        // Check authorization for location tracking
-        checkLocationAuthorization()
-        
         // Set delegate and desited accuracy
         setupLocationManager()
         
-        // Get current location
-        checkForCurrentLocation()
-        
-    }
-    
-    
-    func checkLocationAuthorization() {
         // Check authorization for location tracking
-        if CLLocationManager.authorizationStatus() != .authorizedAlways ||
-            CLLocationManager.authorizationStatus() != .authorizedWhenInUse {
-            print("requesting authorization")
-            locationManager.requestAlwaysAuthorization()
-        } else {
-            locationManager.startUpdatingLocation()
-        }
-    }
-    
-    func checkForCurrentLocation() {
+        checkLocationAuthorization()
+        
         // Get current location
-        if CLLocationManager.authorizationStatus() == .authorizedAlways ||
-            CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
-            self.currentLocation = locationManager.location
-        }
+        //checkForCurrentLocation()
     }
     
     func setupLocationManager() {
@@ -427,12 +422,27 @@ extension CurrentWeatherViewController: CLLocationManagerDelegate {
     }
     
     
-//    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-//        currentLocation = locations.last
-//    }
-//
-//    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-//        checkLocationAuthorization()
-//    }
+    func checkLocationAuthorization() {
+        // Check authorization for location tracking
+        if CLLocationManager.authorizationStatus() != .authorizedAlways ||
+            CLLocationManager.authorizationStatus() != .authorizedWhenInUse {
+            print("requesting authorization")
+            locationManager.requestAlwaysAuthorization()
+            locationManager.requestWhenInUseAuthorization()
+            locationManager.startUpdatingLocation()
+        } else {
+            locationManager.startUpdatingLocation()
+            self.currentLocation = locationManager.location
+        }
+    }
+    
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        currentLocation = locations.last
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        checkLocationAuthorization()
+    }
 }
 

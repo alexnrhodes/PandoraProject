@@ -17,6 +17,7 @@ class ForecastedWeatherDayViewController: UIViewController {
     @IBOutlet weak var highLabel: UILabel!
     @IBOutlet weak var lowLabel: UILabel!
     @IBOutlet weak var cloudPercentageLabel: UILabel!
+    @IBOutlet weak var dayLabel: UILabel!
     
     var forecastedWeatherDay: ForecastedWeatherDayViewModel?
     var cityName: String?
@@ -32,6 +33,7 @@ updateViews()
         guard let forecastedWeatherDay = forecastedWeatherDay,
         let cityName = cityName else {return}
         
+        dayLabel.text = forecastedWeatherDay.date
         cityNameLabel.text = cityName
         currentTempLabel.text = forecastedWeatherDay.temp
         weatherTypeLabel.text = forecastedWeatherDay.weather
