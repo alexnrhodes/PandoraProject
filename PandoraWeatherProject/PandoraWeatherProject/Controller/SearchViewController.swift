@@ -10,12 +10,18 @@ import UIKit
 
 class SearchViewController: UIViewController, UISearchBarDelegate {
     
+    // MARK: IBOutlets
+    
     @IBOutlet weak var loactionSearchBar: UISearchBar!
+    
+    // MARK: Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         loactionSearchBar.delegate = self
     }
+    
+    // MARK: Methods
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let cityName = loactionSearchBar.text else { return }

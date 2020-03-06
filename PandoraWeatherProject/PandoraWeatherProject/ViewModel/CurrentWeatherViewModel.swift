@@ -30,8 +30,6 @@ class CurrentWeatherViewModel {
         self.tempMax = String(format: "%.0f", currentWeather.tempMax) + "°"
         self.windSpeed = String(format: "%.0f", currentWeather.windSpeed) + "MPH"
         self.cloudPercentage = String(currentWeather.cloudPercentage) + "%"
-        
-        
         dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "h:mm a"
         dateFormatter.timeZone = TimeZone.current

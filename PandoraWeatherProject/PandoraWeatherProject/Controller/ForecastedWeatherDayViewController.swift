@@ -10,6 +10,8 @@ import UIKit
 
 class ForecastedWeatherDayViewController: UIViewController {
     
+    // MARK: IBOutlets
+    
     @IBOutlet weak var cityNameLabel: UILabel!
     @IBOutlet weak var currentTempLabel: UILabel!
     @IBOutlet weak var weatherTypeLabel: UILabel!
@@ -22,17 +24,20 @@ class ForecastedWeatherDayViewController: UIViewController {
     var forecastedWeatherDay: ForecastedWeatherDayViewModel?
     var cityName: String?
     
+    // MARK: Lifecycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-updateViews()
+        updateViews()
     }
     
+    // MARK: Methods
 
     func updateViews() {
-        
+        // check for objects
         guard let forecastedWeatherDay = forecastedWeatherDay,
-        let cityName = cityName else {return}
-        
+            let cityName = cityName else {return}
+        // update UI
         dayLabel.text = forecastedWeatherDay.date
         cityNameLabel.text = cityName
         currentTempLabel.text = forecastedWeatherDay.temp
@@ -41,8 +46,6 @@ updateViews()
         highLabel.text = forecastedWeatherDay.tempMax
         lowLabel.text = forecastedWeatherDay.tempMin
         cloudPercentageLabel.text = forecastedWeatherDay.cloudPercentage
-
-        
     }
-
+    
 }

@@ -19,10 +19,10 @@ class Network {
     var fiveDayForcast: [ForcastedWeatherDay]?
     var weatherDays: [ForcastedWeatherDay] = []
     
-    //MARK: - Fetch Current By User Location
+    //MARK: - Fetch By Location Method
     
     func fetchWeatherByLocation(location: CLLocation, completion: @escaping (CurrentWeather?, Error?) -> Void ) {
-         
+        // create url
          var url = baseURL.appendingPathComponent("weather")
          var components = URLComponents(url: url, resolvingAgainstBaseURL: true)!
          let latitudeString = String(location.coordinate.latitude)
@@ -33,7 +33,7 @@ class Network {
          let apiKeyQueryItem = URLQueryItem(name: "apiKey", value: apiKey)
          components.queryItems = [latQueryItem, lonQueryItem, imperialQueryItem, apiKeyQueryItem]
          url = components.url!
-         
+        // start data task
          Group.dispatchGroup.enter()
          URLSession.shared.dataTask(with: url) { (data, _, error) in
              if let error = error {
@@ -41,13 +41,11 @@ class Network {
                  completion(nil, error)
                  return
              }
-             
              guard let data = data else {
                  let error = NSError()
                  NSLog("Bad data. Error with date when fetching weather by zipcode: \(location) with error:\(error)")
                  return
              }
-             
              do{
                  let weatherDay = try JSONDecoder().decode(CurrentWeather.self, from: data)
                  self.currentWeather = weatherDay
@@ -62,8 +60,8 @@ class Network {
     //MARK: - Fetch 5-Day Weather Forcast By Location
     
     func fetchFiveDayByLocation(location: CLLocation, completion: @escaping ([ForcastedWeatherDay]?, Error?) -> Void ) {
+        // create url
         var url = baseURL.appendingPathComponent("forecast")
-        
         var components = URLComponents(url: url, resolvingAgainstBaseURL: true)!
         let latitudeString = String(location.coordinate.latitude)
         let longitudeString = String(location.coordinate.longitude)
@@ -74,22 +72,19 @@ class Network {
         components.queryItems = [latQueryItem, lonQueryItem, imperialQueryItem, apiKeyQueryItem]
         url = components.url!
         print("The url is \(url)")
-        
+        // start data task
         Group.dispatchGroup.enter()
         URLSession.shared.dataTask(with: url) { (data, _, error) in
-            
             if let error = error {
                 NSLog("Error fetching city by name:\(error)")
                 completion(nil, error)
                 return
             }
-            
             guard let data = data else {
                 let error = NSError()
                 NSLog("Bad data. Error with date when fetching weather by zip code: \(location) with error:\(error)")
                 return
             }
-
             do{
                 let weatherList = try JSONDecoder().decode(FiveDayForcast.self, from: data)
                 self.weatherDays = weatherList.list
@@ -107,7 +102,6 @@ class Network {
     private func cleanFiveDayForecast(daysToClean: [ForcastedWeatherDay]) -> [ForcastedWeatherDay] {
 
         var cleanWeatherDays: [ForcastedWeatherDay] = []
-
         var day1Hours: [ForcastedWeatherDay] = []
         var day2Hours: [ForcastedWeatherDay] = []
         var day3Hours: [ForcastedWeatherDay] = []
