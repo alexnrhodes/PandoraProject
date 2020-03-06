@@ -33,12 +33,12 @@ updateViews()
         let cityName = cityName else {return}
         
         cityNameLabel.text = cityName
-        currentTempLabel.text = "\(forecastedWeatherDay.temp)°"
+        currentTempLabel.text = forecastedWeatherDay.temp
         weatherTypeLabel.text = forecastedWeatherDay.weather
-        feelsLikeLabel.text = "\(forecastedWeatherDay.temp)°"
-        highLabel.text = "\(forecastedWeatherDay.tempMax)°"
-        lowLabel.text = "\(forecastedWeatherDay.tempMin)°"
-        cloudPercentageLabel.text = "\(forecastedWeatherDay.cloudPercentage)%"
+        feelsLikeLabel.text = forecastedWeatherDay.temp
+        highLabel.text = forecastedWeatherDay.tempMax
+        lowLabel.text = forecastedWeatherDay.tempMin
+        cloudPercentageLabel.text = forecastedWeatherDay.cloudPercentage
 
         
     }

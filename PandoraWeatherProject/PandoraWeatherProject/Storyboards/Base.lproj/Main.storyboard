@@ -168,6 +168,9 @@
                                             <segment title="Sallisaw, Oklahoma"/>
                                             <segment title="Favorite Location"/>
                                         </segments>
+                                        <connections>
+                                            <action selector="weatherSegmentedControlChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="Gid-R5-toG"/>
+                                        </connections>
                                     </segmentedControl>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBrownColor" red="0.63529411759999999" green="0.51764705879999995" blue="0.36862745099999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -385,7 +388,11 @@
                     </view>
                     <navigationItem key="navigationItem" id="4wM-6b-Pf4">
                         <rightBarButtonItems>
-                            <barButtonItem image="star" catalog="system" id="bqv-D6-ZXq"/>
+                            <barButtonItem image="star" catalog="system" id="bqv-D6-ZXq">
+                                <connections>
+                                    <action selector="favoriteButtonTapped:" destination="BYZ-38-t0r" id="zQ0-iv-dgE"/>
+                                </connections>
+                            </barButtonItem>
                             <barButtonItem title="Change Location" id="Msb-Q0-Kkg">
                                 <connections>
                                     <segue destination="jf5-T4-WBH" kind="presentation" modalPresentationStyle="automatic" id="Z4u-mu-RIj"/>
@@ -407,6 +414,7 @@
                         <outlet property="dayThreeTempLabel" destination="HUV-Tg-x2e" id="SoE-3V-Ras"/>
                         <outlet property="dayTwoDayLabel" destination="xHN-gG-2Q9" id="W6B-w8-fwm"/>
                         <outlet property="dayTwoTempLabel" destination="kW7-TY-kF1" id="epd-HK-gzX"/>
+                        <outlet property="favoriteBarButtonItem" destination="bqv-D6-ZXq" id="gxn-wC-zzb"/>
                         <outlet property="favoriteButton" destination="bqv-D6-ZXq" id="BHO-ly-6u5"/>
                         <outlet property="highLabel" destination="tyL-Hy-9wY" id="mPA-xg-30L"/>
                         <outlet property="lowLabel" destination="Lzo-iC-Rin" id="fGi-LW-2WR"/>

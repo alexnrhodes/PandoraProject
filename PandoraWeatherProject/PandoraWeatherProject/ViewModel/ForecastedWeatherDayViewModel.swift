@@ -9,21 +9,27 @@
 import Foundation
 
 struct ForecastedWeatherDayViewModel {
+    
+    let dateFormatter: DateFormatter
     let weather: String
-    let temp: Double
-    let feelsLike: Double
-    let tempMin: Double
-    let tempMax: Double
-    let cloudPercentage: Int
-    let date: Double
+    let temp: String
+    let feelsLike: String
+    let tempMin: String
+    let tempMax: String
+    let cloudPercentage: String
+    let date: String
     
     init(forecastedWeatherDay: ForcastedWeatherDay) {
         self.weather = forecastedWeatherDay.weather.first ?? "N/A"
-        self.temp = forecastedWeatherDay.temp
-        self.feelsLike = forecastedWeatherDay.feelsLike
-        self.tempMin = forecastedWeatherDay.tempMin
-        self.tempMax = forecastedWeatherDay.tempMax
-        self.cloudPercentage = forecastedWeatherDay.cloudPercentage
-        self.date = forecastedWeatherDay.date
+        self.temp = String(format: "%.0f", forecastedWeatherDay.temp) + "°"
+        self.feelsLike = String(format: "%.0f", forecastedWeatherDay.feelsLike) + "°"
+        self.tempMin = String(format: "%.0f", forecastedWeatherDay.tempMin) + "°"
+        self.tempMax = String(format: "%.0f", forecastedWeatherDay.tempMax) + "°"
+        self.cloudPercentage = String(forecastedWeatherDay.cloudPercentage) + "%"
+        dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "EEEE"
+        dateFormatter.timeZone = TimeZone.current
+        let date = Date(timeIntervalSince1970: forecastedWeatherDay.date)
+        self.date = dateFormatter.string(from: date)
     }
 }

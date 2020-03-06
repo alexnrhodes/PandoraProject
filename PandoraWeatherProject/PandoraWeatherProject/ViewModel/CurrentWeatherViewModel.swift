@@ -9,30 +9,36 @@
 import Foundation
 
 
-struct CurrentWeatherViewModel {
+class CurrentWeatherViewModel {
     
-    var numberFormatter = NumberFormatter()
-    
+    let dateFormatter: DateFormatter
     let cityName: String
     let weather: String
-    let temp: Double
-    let tempMin: Double
-    let tempMax: Double
-    let windSpeed: Double
-    let cloudPercentage: Int
-    let sunrise: Double
-    let sunset: Double
+    let temp: String
+    let tempMin: String
+    let tempMax: String
+    let windSpeed: String
+    let cloudPercentage: String
+    let sunrise: String
+    let sunset: String
     
     init(currentWeather: CurrentWeather) {
         self.cityName = currentWeather.cityName 
         self.weather = currentWeather.weather.first ?? "Not available"
-        self.temp = currentWeather.temp // number formatter
-        self.tempMin = currentWeather.tempMin // number formatter
-        self.tempMax = currentWeather.tempMax // number formatter
-        self.windSpeed = currentWeather.windSpeed // number formatter
-        self.cloudPercentage = currentWeather.cloudPercentage
-        self.sunrise = currentWeather.sunrise // date formatter
-        self.sunset = currentWeather.sunset // date formatter
+        self.temp = String(format: "%.0f", currentWeather.temp) + "°"
+        self.tempMin = String(format: "%.0f", currentWeather.tempMin) + "°"
+        self.tempMax = String(format: "%.0f", currentWeather.tempMax) + "°"
+        self.windSpeed = String(format: "%.0f", currentWeather.windSpeed) + "MPH"
+        self.cloudPercentage = String(currentWeather.cloudPercentage) + "%"
+        
+        
+        dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "h:mm a"
+        dateFormatter.timeZone = TimeZone.current
+        let sunrise = Date(timeIntervalSince1970: currentWeather.sunrise)
+        self.sunrise = dateFormatter.string(from: sunrise)
+        let sunset = Date(timeIntervalSince1970: currentWeather.sunset)
+        self.sunset = dateFormatter.string(from: sunset)
     }
     
 }
