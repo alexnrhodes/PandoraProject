@@ -36,6 +36,7 @@ class CurrentWeatherViewController: UIViewController {
     @IBOutlet weak var dayThreeTempLabel: UILabel!
     @IBOutlet weak var dayFourTempLabel: UILabel!
     @IBOutlet weak var dayFiveTempLabel: UILabel!
+    @IBOutlet weak var favoriteBarButtonItem: UIBarButtonItem!
     
     
     // MARK: Properties
@@ -44,16 +45,22 @@ class CurrentWeatherViewController: UIViewController {
     let locationManager = CLLocationManager()
     var network = Network()
     
+    
     var forecastedWeatherDay: ForecastedWeatherDayViewModel?
     var currentCityName: String?
     var searchedCity: String? {
         didSet {
-           getCLLocationFromSearch()
+            getCLLocationFromSearch()
+        }
+    }
+    var favoriteLocation: CLLocation? {
+        didSet {
+            performFetchesByFavoriteLocation()
         }
     }
     var searchedLocation: CLLocation! {
         didSet {
-           performFetchesWithSearchedLocation()
+            performFetchesBySearchedLocation()
         }
     }
     var currentLocation: CLLocation! {
@@ -61,16 +68,18 @@ class CurrentWeatherViewController: UIViewController {
             performFetchedByCurrentLocation()
         }
     }
-    var currentWeather: CurrentWeatherViewModel? {
+    var displayedCurrentWeather: CurrentWeatherViewModel? {
         didSet {
             updateViews()
         }
     }
-    var fiveDayForecast: [ForecastedWeatherDayViewModel]! {
+    var displayedFiveDayForecast: [ForecastedWeatherDayViewModel]! {
         didSet {
             updateViews()
         }
     }
+    
+    // MARK: Lifelcycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -81,7 +90,36 @@ class CurrentWeatherViewController: UIViewController {
         
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        weatherSegmentedControl.selectedSegmentIndex = 0
+    }
     
+    // MARK: IBActions
+    
+    @IBAction func favoriteButtonTapped(_ sender: UIBarButtonItem) {
+        guard let currentWeather = displayedCurrentWeather  else { return }
+        UserDefaults.standard.set(currentWeather.cityName, forKey: "favoriteCityWeather")
+        updateViews()
+    }
+    
+    @IBAction func weatherSegmentedControlChanged(_ sender: UISegmentedControl) {
+        if sender.selectedSegmentIndex == 0 {
+            performFetchesBySearchedLocation()
+            updateViews()
+        } else if sender.selectedSegmentIndex == 1 {
+            getCLLocationFromFavoriteCity()
+            performFetchesByFavoriteLocation()
+            updateViews()
+        }
+        
+        if favoriteLocation == nil {
+            let alert = UIAlertController(title: "Oops!", message: "Please select a favorite city by using the star button!", preferredStyle: .alert)
+            let action = UIAlertAction(title: "Dismiss", style: .default)
+            alert.addAction(action)
+            self.present(alert, animated: true)
+        }
+    }
     
     // MARK: - Navigation
     
@@ -101,6 +139,7 @@ extension CurrentWeatherViewController {
     // MARK: Networking
     
     func performFetchedByCurrentLocation() {
+        guard let currentLocation = currentLocation else { return }
         // fetch the current weather for current location
         network.fetchWeatherByLocation(location: currentLocation) { (currentWeather, error) in
             
@@ -110,7 +149,7 @@ extension CurrentWeatherViewController {
             
             if let currentWeather = currentWeather {
                 print(currentWeather)
-                self.currentWeather = CurrentWeatherViewModel(currentWeather: currentWeather)
+                self.displayedCurrentWeather = CurrentWeatherViewModel(currentWeather: currentWeather)
             }
         }
         
@@ -122,15 +161,16 @@ extension CurrentWeatherViewController {
             }
             
             if let forecastedWeatherDays = forecastedWeatherDays {
-                let day = forecastedWeatherDays.map {ForecastedWeatherDayViewModel(forecastedWeatherDay: $0)}
-                self.fiveDayForecast = day
+                let fiveDay = forecastedWeatherDays.map {ForecastedWeatherDayViewModel(forecastedWeatherDay: $0)}
+                self.displayedFiveDayForecast = fiveDay
                 
             }
         }
     }
     
-    func performFetchesWithSearchedLocation() {
-        
+    func performFetchesBySearchedLocation() {
+        guard let searchedLocation = searchedLocation else { return }
+        // fetch current weather by seearched location
         network.fetchWeatherByLocation(location: searchedLocation) { (currentWeather, error) in
             
             if let error = error {
@@ -139,11 +179,11 @@ extension CurrentWeatherViewController {
             
             if let currentWeather = currentWeather {
                 print(currentWeather)
-                self.currentWeather = CurrentWeatherViewModel(currentWeather: currentWeather)
+                self.displayedCurrentWeather = CurrentWeatherViewModel(currentWeather: currentWeather)
             }
         }
         
-        // fetch five day for current location
+        // fetch five day for searched Location
         network.fetchFiveDayByLocation(location: searchedLocation) { (forecastedWeatherDays, error) in
             
             if let error = error {
@@ -151,20 +191,53 @@ extension CurrentWeatherViewController {
             }
             
             if let forecastedWeatherDays = forecastedWeatherDays {
-                let day = forecastedWeatherDays.map {ForecastedWeatherDayViewModel(forecastedWeatherDay: $0)}
-                self.fiveDayForecast = day
+                let fiveDay = forecastedWeatherDays.map {ForecastedWeatherDayViewModel(forecastedWeatherDay: $0)}
+                self.displayedFiveDayForecast = fiveDay
                 
             }
         }
     }
-
     
+    func performFetchesByFavoriteLocation() {
+        
+        guard let favoriteCity = favoriteLocation else { return }
+        
+        network.fetchWeatherByLocation(location: favoriteCity) { (currentWeather, error) in
+            
+            if let error = error {
+                NSLog("Error retrieving weather by current location: \(error)")
+            }
+            
+            if let currentWeather = currentWeather {
+                print(currentWeather)
+                self.displayedCurrentWeather = CurrentWeatherViewModel(currentWeather: currentWeather)
+            }
+        }
+        
+        // fetch five day for current location
+        network.fetchFiveDayByLocation(location: favoriteCity) { (forecastedWeatherDays, error) in
+            
+            if let error = error {
+                NSLog("Error retrieving five day forecast by current location: \(error)")
+            }
+            
+            if let forecastedWeatherDays = forecastedWeatherDays {
+                let day = forecastedWeatherDays.map {ForecastedWeatherDayViewModel(forecastedWeatherDay: $0)}
+                self.displayedFiveDayForecast = day
+                
+            }
+        }
+    }
     
     func getCLLocationFromSearch() {
         // Obtain CL Location from the searched city
         guard let searchedCity = searchedCity  else { return }
         geocoder.geocodeAddressString(searchedCity) { (placeMarks, error) in
             if let error = error {
+                let alert = UIAlertController(title: "Oops!", message: "We could not find that city!", preferredStyle: .alert)
+                let action = UIAlertAction(title: "Dismiss", style: .default)
+                alert.addAction(action)
+                self.present(alert, animated: true)
                 NSLog("Error getting CLLocation from searchTerm: \(searchedCity) with error:\(error)")
                 return
             }
@@ -175,34 +248,51 @@ extension CurrentWeatherViewController {
         }
     }
     
+    func getCLLocationFromFavoriteCity() {
+        guard let favoriteCity = UserDefaults.standard.value(forKey: "favoriteCityWeather") else {return}
+        
+        // Obtain CL Location from the searched city
+        geocoder.geocodeAddressString("\(favoriteCity)") { (placeMarks, error) in
+            
+            if let error = error {
+                NSLog("Error getting CLLocation from searchTerm: \(favoriteCity) with error:\(error)")
+            }
+            
+            guard let placemark = placeMarks?.first,
+                let location = placemark.location else { return }
+            self.favoriteLocation = location
+        }
+    }
+    
     // MARK: UI
     
     func updateViews() {
         
-        let temps = fiveDayForecast.map { $0.map { $0.temp }}
-        let days = fiveDayForecast.map { $0.map { $0.date }}
+        let temps = displayedFiveDayForecast.map { $0.map { $0.temp }}
+        let days = displayedFiveDayForecast.map { $0.map { $0.date }}
         
         // Update five day UI views
         DispatchQueue.main.async {
             self.forecastedWeatherDayViews.map{$0.map { $0.layer.cornerRadius = 30 }}
+            self.navigationController?.navigationBar.setValue(true, forKey: "hidesShadow")
         }
         
         
-        if let currentWeather = currentWeather  {
+        if let currentWeather = displayedCurrentWeather  {
             DispatchQueue.main.async {
                 // update UI elements on current weather
-                self.weatherSegmentedControl.setTitle("\(currentWeather.cityName)", forSegmentAt: 0)
-                self.currentTempLabel.text = "\(currentWeather.temp)°"
-                self.highLabel.text = "\(currentWeather.tempMax)°"
-                self.lowLabel.text = "\(currentWeather.tempMin)°"
-                self.windSpeedLabel.text = "\(currentWeather.windSpeed) MPH"
-                self.cloudPercentageLabel.text = "\(currentWeather.cloudPercentage) %"
-                self.sunriseLabel.text = "\(currentWeather.sunrise) AM"
-                self.sunsetLabel.text = "\(currentWeather.sunset) PM"
+                self.weatherSegmentedControl.setTitle(currentWeather.cityName, forSegmentAt: 0)
+                self.currentTempLabel.text = currentWeather.temp
+                self.highLabel.text = currentWeather.tempMax
+                self.lowLabel.text = currentWeather.tempMin
+                self.windSpeedLabel.text = currentWeather.windSpeed
+                self.cloudPercentageLabel.text = currentWeather.cloudPercentage
+                self.sunriseLabel.text = currentWeather.sunrise
+                self.sunsetLabel.text = currentWeather.sunset
             }
         }
         
-        if let fiveDayForecast = fiveDayForecast, let days = days, let temps = temps {
+        if let fiveDayForecast = displayedFiveDayForecast, let days = days, let temps = temps {
             
             DispatchQueue.main.async {
                 print(fiveDayForecast)
@@ -224,7 +314,20 @@ extension CurrentWeatherViewController {
         if let searchedCity = searchedCity {
             DispatchQueue.main.async {
                 self.weatherSegmentedControl.setTitle(searchedCity, forSegmentAt: 0)
-
+                
+            }
+        }
+        
+        if let favoriteWeather = UserDefaults.standard.value(forKey: "favoriteCityWeather") {
+            DispatchQueue.main.async {
+                self.favoriteButton.image = UIImage(systemName: "star.fill")
+                self.weatherSegmentedControl.setTitle("\(favoriteWeather)", forSegmentAt: 1)
+            }
+        }
+        
+        if UserDefaults.standard.value(forKey: "favoriteCityWeather") == nil {
+            DispatchQueue.main.async {
+                self.weatherSegmentedControl.selectedSegmentIndex = 0
             }
         }
     }
@@ -251,34 +354,34 @@ extension CurrentWeatherViewController {
     }
     
     @objc func tapOne() {
-        self.forecastedWeatherDay = fiveDayForecast[0]
+        self.forecastedWeatherDay = displayedFiveDayForecast[0]
         checkForCurrentWeather()
         
     }
     
     @objc func tapTwo() {
         checkForCurrentWeather()
-        self.forecastedWeatherDay = fiveDayForecast[1]
+        self.forecastedWeatherDay = displayedFiveDayForecast[1]
     }
     
     @objc func tapThree() {
-        self.forecastedWeatherDay = fiveDayForecast[2]
+        self.forecastedWeatherDay = displayedFiveDayForecast[2]
         checkForCurrentWeather()
     }
     
     @objc func tapFour() {
-        self.forecastedWeatherDay = fiveDayForecast[3]
+        self.forecastedWeatherDay = displayedFiveDayForecast[3]
         checkForCurrentWeather()
     }
     
     @objc func tapFive() {
-        self.forecastedWeatherDay = fiveDayForecast[4]
+        self.forecastedWeatherDay = displayedFiveDayForecast[4]
         checkForCurrentWeather()
         
     }
     
     func checkForCurrentWeather() {
-        guard let currentWeather = currentWeather else { return }
+        guard let currentWeather = displayedCurrentWeather else { return }
         self.currentCityName = currentWeather.cityName
         performSegue(withIdentifier: "ForecastedWeatherDetailSegue", sender: self)
     }
@@ -288,7 +391,7 @@ extension CurrentWeatherViewController {
     func addObservers() {
         NotificationCenter.default.addObserver(forName: .searchCityNameChosen, object: nil, queue: OperationQueue.main) { (notification) in
             guard let userInfo = notification.userInfo,
-            let cityName = userInfo["name"] else {return}
+                let cityName = userInfo["name"] else {return}
             self.searchedCity = "\(cityName)"
             
         }
@@ -302,35 +405,14 @@ extension CurrentWeatherViewController: CLLocationManagerDelegate {
     
     func coreLocationSetup() {
         
-        // Check authorization for location tracking
-        checkLocationAuthorization()
-        
         // Set delegate and desited accuracy
         setupLocationManager()
         
-        // Get current location
-        checkForCurrentLocation()
-        
-    }
-    
-    
-    func checkLocationAuthorization() {
         // Check authorization for location tracking
-        if CLLocationManager.authorizationStatus() != .authorizedAlways ||
-            CLLocationManager.authorizationStatus() != .authorizedWhenInUse {
-            print("requesting authorization")
-            locationManager.requestAlwaysAuthorization()
-        } else {
-            locationManager.startUpdatingLocation()
-        }
-    }
-    
-    func checkForCurrentLocation() {
+        checkLocationAuthorization()
+        
         // Get current location
-        if CLLocationManager.authorizationStatus() == .authorizedAlways ||
-            CLLocationManager.authorizationStatus() == .authorizedWhenInUse {
-            self.currentLocation = locationManager.location
-        }
+        //checkForCurrentLocation()
     }
     
     func setupLocationManager() {
@@ -340,12 +422,27 @@ extension CurrentWeatherViewController: CLLocationManagerDelegate {
     }
     
     
-//    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-//        currentLocation = locations.last
-//    }
-//
-//    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
-//        checkLocationAuthorization()
-//    }
+    func checkLocationAuthorization() {
+        // Check authorization for location tracking
+        if CLLocationManager.authorizationStatus() != .authorizedAlways ||
+            CLLocationManager.authorizationStatus() != .authorizedWhenInUse {
+            print("requesting authorization")
+            locationManager.requestAlwaysAuthorization()
+            locationManager.requestWhenInUseAuthorization()
+            locationManager.startUpdatingLocation()
+        } else {
+            locationManager.startUpdatingLocation()
+            self.currentLocation = locationManager.location
+        }
+    }
+    
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        currentLocation = locations.last
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        checkLocationAuthorization()
+    }
 }
 
